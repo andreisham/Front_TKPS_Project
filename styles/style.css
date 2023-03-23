@@ -1,0 +1,230 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  font-size: 28px;
+  color: #333;
+  margin: 30px 0 20px 0;
+  text-align: center;
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.cvss_form {
+    display: grid; 
+    margin: 0;
+    max-width: 100%;
+    grid-template-columns: 1fr 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "cvss_vector cvss_vector"
+      "baseMetricGroup temporalMetricGroup"
+      "environmentalMetricGroup environmentalMetricGroup"; 
+}
+#cvss_vector { grid-area: cvss_vector; }
+#baseMetricGroup { grid-area: baseMetricGroup; }
+#temporalMetricGroup { grid-area: temporalMetricGroup; }
+#temporalMetricGroup .column-left {
+  width: 80%;
+}
+#environmentalMetricGroup { grid-area: environmentalMetricGroup; }
+
+.row {
+  margin-bottom: 20px;
+}
+
+.discovery {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+
+
+.calc-cvss {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
+.calc-cvss input[type="text"], .calc-cvss .btn {
+
+  margin-right: 10px;
+}
+
+.calc-cvss .btn {
+  width: 200px;
+  margin-right: 10px;
+}
+
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  overflow:hidden
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  appearance: none;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ccc' d='M12 16.2L6.6 10.8 5.2 12.2 12 19 18.8 12.2 17.4 10.8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #317ac3;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #468ace;
+}
+
+.btn:active {
+  background-color: #468ace;
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Стили для модального окна */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.5); 
+  justify-content: center;
+}
+
+.modal_content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+  overflow: auto;
+}
+
+#score_rating {
+  text-align: center;
+  margin-right: 5px;
+  padding: 3px;
+}
+
+.critical {
+  background-color: blueviolet;
+}
+
+.high {
+  background-color: red;
+}
+
+.middle {
+  background-color: #f9a009;
+}
+
+.low {
+  background-color: green;
+}
+
+.close-icon {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 16px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.close-icon::before, .close-icon::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  background-color: black;
+  
+}
+
+.close-icon::after {
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.tag_container {
+  border: 2px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag_container .tag {
+  padding: 5px;
+  border: 1px solid #ccc;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  background: #f2f2f2;
+}
+
+.tag_container input {
+  font-size: 16px;
+  flex: 1;
+  padding: 5px;
+  outline: none;
+  border: 0;
+}
