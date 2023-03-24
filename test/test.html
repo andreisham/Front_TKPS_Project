@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .move_icon {
+            background-image: url('../../img/iconfinder_menu_lines_hamburger_134216.svg');
+            height: 50px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: auto;
+            width: 50px;
+        }
+
+        .del_icon {
+            background-image: url('../../img/iconfinder_delete_forever_ic_3669360.svg');
+            height: 50px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: auto;
+            width: 50px;
+        }
+        .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .vulns-detail {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f2f2f2;
+  }
+
+  .vulns-detail h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #3e8e41;
+  }
+  
+  .description_block, .image_block {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    align-items: center;
+    position: relative;
+  }
+  
+  .move_icon, .del_icon {
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+
+  .move_icon::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin: 5px;
+  }
+
+  .del_icon::before, .del_icon::after {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 15px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .del_icon::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .del_icon::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .detail_content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+  }
+
+  .input__wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .input__file {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+
+  .input__file-button {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 1.25em;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .input__file-button:hover {
+    background-color: #3e8e41;
+  }
+
+  .input__file-button-text {
+    margin-left: 10px;
+  }
+    </style>
+    <div class="row vulns-detail">
+        <h3>Свидетельства обнаружения</h3>
+        <input type="button" class="btn" value="Добавить блок" onclick="add_block()">
+        <div class="description_block detail_block">
+            <div class="move_icon"></div>
+            <div class="detail_content">
+                <textarea name="" id="" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea> 
+                <input type="button" class="btn" value="Добавить блок" onclick="add_block()">
+            </div>
+            <div class="del_icon"></div>
+        </div>
+        <div class="image_block detail_block">
+            <div class="move_icon"></div>
+            <div class="detail_content">
+                <div class="input__wrapper">
+                    <input name="file" type="file" id="input__file" class="input input__file">
+                    <label for="input__file" class="input__file-button btn">
+                       <span class="input__file-icon-wrapper"><img class="input__file-icon" src="../img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
+                       <span class="input__file-button-text">Выберите файл</span>
+                    </label>
+                 </div>
+                <textarea name="" id="" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea>
+                <input type="button" class="btn" value="Добавить блок" onclick="add_block()">
+            </div>
+            <div class="del_icon"></div>
+        </div>
+    </div>
+</body>
+</html>

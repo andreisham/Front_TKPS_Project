@@ -9,33 +9,38 @@
 </head>
 <body>
     <h1>Добавление уязвимости</h1>
-    <form action="#" method="post">
+    <form action="#" method="post" id="vuln_add_form">
         <div class="row">
             <label>Наименование
-                <input type="text" name="">
+                <input type="text" name="vuln-fullname" required>
             </label>
         </div>
         <div class="row">
             <label>Подробное описание
-                <textarea name="" id="" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea>
+                <textarea name="vuln-description" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+            </label>
+        </div>
+        <div class="row">
+            <label>Последствия эксплуатации
+                <textarea name="vuln-consequences" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
             </label>
         </div>
         <div class="row">
             <label>Точка входа
-                <textarea name="" id="" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea>
+                <textarea name="vuln-endpoints" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
             </label>
         </div>
         <div class="row discovery">
             <label> Где выявлено
-                <select name="" id="">
-                    <option value="">Mobile Android</option>
-                    <option value="">Mobile iOS</option>
-                    <option value="">Web</option>
-                    <option value="">Web + Mobile</option>
+                <select name="vuln-channel-application" id="">
+                    <option value="1" selected>Mobile Android</option>
+                    <option value="2">Mobile iOS</option>
+                    <option value="3">Web</option>
+                    <option value="4">Web + Mobile</option>
                 </select>
             </label>
             <label>Дата выявления
-                <input type="date" id="start" name="vuln-date-of-discovery"
+                <input type="date" id="start" required name="vuln-date-of-discovery"
                 value="2023-03-21"
                 min="2020-01-01" max="2099-12-31">
             </label>
@@ -43,13 +48,13 @@
         <div class="row tags_container">
             <label>Классификация уязвимости (CWE, MASSVS)
                 <div class="tag_container">
-                    <input type="text" data-role="taginput"> <!-- найти как встроить сюда теги --> 
+                    <input name="vuln-classification" type="text" required data-role="taginput"> <!-- найти как встроить сюда теги --> 
                 </div>
             </label>
         </div>
         <div class="row">
             <label>Ссылка на источники
-                <textarea name="" id="source_links" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea>
+                <textarea name="class-link" id="source_links" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
             </label>
         </div>
         <div class="row calc-cvss">
@@ -57,21 +62,33 @@
                 <span id="cvss_score">CVSS</span>
                 <span id="cvss_severity">Score</span>
             </div>
-            <input type="text" name="" id="page_vector_string">
+            <input type="text" name="vuln-vector-cvss" required id="page_vector_string">
             <input type="button" value="Рассчитать CVSS 3.1" class="btn" id="cvss-button">
         </div>
         <div class="row">
             <label>Рекомендации по устранению
-                <textarea name="" id="" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea>
+                <textarea name="vuln-recommendation" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
             </label>
         </div>
         <div class="row vulns-detail">
             <h3>Свидетельства обнаружения</h3>
-            
+            <input type="button" class="btn add_btn" value="Добавить блок" onclick="openModalAddBlock()">
+            <div id="detail-modal">
+                <div id="detail_modal_content">
+                    <h3>Выбор блока</h3>
+                    <label> Выберите тип блока
+                        <select>
+                            <option value="description_block_option" selected>Описание</option>
+                            <option value="image_block_option">Изображение с подпиьсю</option>
+                        </select>
+                    <input type="button" class="btn" value="Добавить блок" onclick="addBlock(this.previousElementSibling)">
+                    </label>
+                </div>
+            </div>
         </div>
         <input type="submit" value="Добавить уязвимость" class="btn">
     </form>
-    <div id="modal" class="my_calcv modal">
+    <div id="cvss-modal" class="my_calcv modal">
         <section class="my_calcv modal_content">
             <div id="body" data-studio-s="body"><div id="c1" data-studio-c="jB0V8tBgyg" class="cvss-calculator"><!-- CVSS Calculator content start - add a <base href="http://www.first.org" /> to the head for offline editing -->
         

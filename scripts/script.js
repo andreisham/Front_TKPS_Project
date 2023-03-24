@@ -6,7 +6,7 @@ function textAreaAdjust(element) {
 
 // =============== Модальное окно CVSS ===============
 // Получаем ссылки на элементы
-let modal = document.getElementById('modal');
+let modal = document.getElementById('cvss-modal');
 let btnOpenModal = document.getElementById("cvss-button");
 
 // Добавляем обработчик события для открытия модального окна
@@ -14,13 +14,6 @@ btnOpenModal.onclick = function() {
   modal.style.display = "flex";
 }
 
-// Добавляем обработчик события для закрытия модального окна при щелчке вне модального окна
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-    render_cvss_rating()
-  }
-}
 
 // =============== Работа с cvss ===============
 // перенос значения cvss на страницу
@@ -145,3 +138,190 @@ function addLink() {
 
 
 // =============== работа с свидетельствами ===============
+// добавление файлов
+let inputs = document.querySelectorAll('.input__file');
+    Array.prototype.forEach.call(inputs, function (input) {
+      let label = input.nextElementSibling,
+        labelVal = label.querySelector('.input__file-button-text').innerText;
+  
+      input.addEventListener('change', function (e) {
+        if (this.files && this.files.length >= 1)
+          fileName = this.files[0].name;
+
+        if (fileName)
+          label.querySelector('.input__file-button-text').innerText = fileName;
+        else
+          label.querySelector('.input__file-button-text').innerText = labelVal;
+      });
+    });
+
+// превью картинок
+function previewImage(element) {
+  let file    = element.files;
+  let preview_img = element.nextElementSibling.nextElementSibling.firstChild; 
+
+  console.log(preview_img)
+
+  if (file.length > 0) {
+    let reader  = new FileReader();
+    let event_link;
+    reader.onload = function(event) {
+      preview_img.setAttribute("src",event.target.result)
+      //preview_img.style.background = `url("${event.target.result}")`
+      preview_img.parentElement.style.display = "block";
+      event_link = event.target.result
+    }
+    // открытие увеличенного изображения в новой вкладке
+    preview_img.parentElement.onclick = function() {
+      var win = window.open();
+      win.document.write('<iframe src="' + event_link  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+    };
+
+    reader.readAsDataURL(file[0])
+  }
+}
+    
+// перетаскивание блоков
+const vulnDetails = document.querySelector(`.vulns-detail`);
+
+vulnDetails.addEventListener(`dragstart`, (evt) => {
+  evt.target.classList.add(`selected`);
+});
+
+vulnDetails.addEventListener(`dragend`, (evt) => {
+  evt.target.classList.remove(`selected`);
+});
+
+vulnDetails.addEventListener(`dragover`, (evt) => {
+  evt.preventDefault();
+
+  const activeElement = vulnDetails.querySelector(`.selected`);
+  const currentElement = evt.target;
+  const isMoveable = activeElement !== currentElement &&
+    currentElement.classList.contains(`detail_block`);
+  
+  if (!isMoveable) {
+    return;
+  }
+
+  const nextElement = (currentElement === activeElement.nextElementSibling) ?
+		currentElement.nextElementSibling :
+		currentElement;
+
+  vulnDetails.insertBefore(activeElement, nextElement);
+});
+
+// удаление блоков
+let delBtns = document.querySelectorAll('.del_icon')
+
+// добавление блоков
+let addBtns = document.querySelectorAll('.add_btn')
+let modalDetail = document.getElementById('detail-modal');
+
+// открытие модального окна выбора блока
+function openModalAddBlock() {
+  modalDetail.style.display = "flex";
+}
+
+// Добавляем обработчик события для закрытия модального окна при щелчке вне модального окна
+window.onclick = function(event) {
+  if (event.target == modalDetail ) {
+    modalDetail.style.display = "none";
+  } else if (event.target == modal) {
+    modal.style.display = "none";
+    render_cvss_rating()
+  }
+}
+
+// создание блока
+function createBlock(selectedValue) {
+  const div = document.createElement('div')
+  div.setAttribute('draggable','true')
+  if (selectedValue == 'description_block_option') { // блок с описанием
+    div.setAttribute('class','description_block detail_block')
+    div.innerHTML = `<div class="move_icon"></div>
+        <textarea name="description" id="" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea> 
+        <input type="button" class="btn" required value="Добавить блок" onclick="openModalAddBlock()">
+        <div class="del_icon" onclick="this.parentElement.remove()"></div>`
+    modalDetail.style.display = "none"
+  } else if (selectedValue == 'image_block_option') { // блок с изображением
+    div.setAttribute('class','image_block detail_block')
+    div.innerHTML = `<div class="move_icon"></div>
+      <div class="input__wrapper">
+          <input name="file" type="file" required accept="image/*" id="input__file" class="input input__file" onchange="previewImage(this)">
+          <label for="input__file" class="input__file-button btn">
+              <span class="input__file-icon-wrapper"><img class="input__file-icon" src="./img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
+              <span class="input__file-button-text">Выберите файл</span>
+          </label>
+          <div class="preview_img_div"><img src="#" class="preview_img"></div>
+          </div>
+      <textarea name="image_descr" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+      <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">
+      <div class="del_icon" onclick="this.parentElement.remove()"></div>`
+    modalDetail.style.display = "none"
+  }
+  return div
+}
+
+// добавление тегов на страницу
+function addBlock(selectedBlock) {
+    const block = createBlock(selectedBlock.value);
+    vulnDetails.append(block)
+} 
+
+// =============== отправка формы ===============
+async function handleFormSubmit(event) {
+  event.preventDefault()
+
+  const data = serializeForm(event.target)
+  console.log(data)
+  const response = await sendData(data)
+}
+
+// сбор данных с формы
+function serializeForm(formNode) {
+  // const { elements } = formNode
+  // const data = Array.from(elements)
+  //   .filter((item) => !!item.name)
+  //   .map((element) => {
+  //     const { name } = element
+  //   if (name == 'vuln-classification') {
+  //     element.value = tags
+  //   }
+  //   const value = element.value
+  //   input.value = ''
+  //     return { name, value }
+  //   })
+
+  // console.log(data)
+
+  const { elements } = formNode
+
+  const data = new FormData()
+
+  Array.from(elements)
+    .filter((item) => !!item.name)
+    .forEach((element) => {
+      const { name } = element
+      if (name == 'vuln-classification') {
+        element.value = tags
+      }
+      const value = element.value
+      data.append(name, value)
+    })
+    input.value = ''
+  return data
+}
+
+// отправка данных
+async function sendData(data) {
+  return await fetch('/api/apply/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    body: data,
+  })
+}
+
+
+const applicantForm = document.getElementById('vuln_add_form')
+applicantForm.addEventListener('submit', handleFormSubmit)
