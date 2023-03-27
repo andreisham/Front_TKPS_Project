@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Добавление уязвимости</h1>
-    <form action="#" method="post" id="vuln_add_form">
+    <form action="#" method="post" id="vuln_add_form" class="form_body">
         <div class="row">
             <label>Наименование
                 <input type="text" name="vuln-fullname" required>
@@ -48,7 +48,7 @@
         <div class="row tags_container">
             <label>Классификация уязвимости (CWE, MASSVS)
                 <div class="tag_container">
-                    <input name="vuln-classification" type="text" required data-role="taginput"> <!-- найти как встроить сюда теги --> 
+                    <input name="vuln-classification" type="text" data-role="taginput"> 
                 </div>
             </label>
         </div>
