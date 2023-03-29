@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Релиз R109 + 17.9</title>
+</head>
+<body>
+    <div class="release_wrapper">
+        <div class="menu_wrapper left_menu_wrapper">
+            <ol class="menu left_menu">
+                <li class="menu_item"><input type="button" class="btn" id="add_release_btn" value="Добавить релиз"></li>
+                <li class="menu_item"><a href="">R110 + 17.10</a></li>
+                <li class="menu_item"><a href="">R109 + 17.9</a></li>
+                <li class="menu_item"><a href="">R108 + 17.8</a></li>
+            </ol>
+        </div>
+        <div class="menu_layout"></div>
+        <div class="table_wrapper">
+            <header class="release_header">
+                <!-- <div> -->
+                    <h1>Релиз R110 + 17.10</h1>
+                    <p>Дата начала 13.03.2023</p>
+                    <p>Дата окончания 20.03.2023</p>
+                    <span id="error_span">Здесь будут предупреждения если не заполнены обязательные поля</span>
+                <!-- </div> -->
+                
+                <div class="btns_wrapper">
+                    <a href="add_vuln.html" class="btn" id="add_vuln_btn">Добавить уязвимость</a>
+                    <input type="button" class="btn" id="primaryReport_btn" value="Создать первичный отчет">
+                    <input type="button" class="btn" id="shortReport_btn" value="Создать краткий отчет">
+                    <input type="button" class="btn" id="fullReport_btn" value="Создать полный отчет">
+                </div>
+            </header>
+            <div class="table_name">
+                <h3>Новые уязвимости</h3>
+            </div>
+            <table class="table new_vuln">
+                <thead>
+                    <tr class="table_header table_row">
+                        <th class="table_item">ID Уязвимости</th>
+                        <th class="table_item">Наименование уязвимости</th>
+                        <th class="table_item">Подробное описание</th>
+                        <th class="table_item">Критичность CVSS</th>
+                        <th class="table_item">Где выявлено</th>
+                        <th class="table_item">Когда выявлено</th>
+                        <th class="table_item table_item_status">Статус уязвимости</th>
+                        <th class="table_item table_item_del">Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table_row">
+                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-2023-2</td>
+                        <td class="table_item">SQLi</td>
+                        <td class="table_item">Возможность сделать SQLi</td>
+                        <td class="table_item table_item_cvss">8.0 Высокая</td>
+                        <td class="table_item">Web</td>
+                        <td class="table_item">15.03.2023</td>
+                        <td class="table_item table_item_status">Новая</td>
+                        <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table_name">
+                <h3>Перепроверка уязвимостей</h3>
+            </div>
+            <table class="table old_vuln">
+                <thead>
+                    <tr class="table_header table_row">
+                        <th class="table_item">ID Уязвимости</th>
+                        <th class="table_item">Наименование уязвимости</th>
+                        <th class="table_item">Подробное описание</th>
+                        <th class="table_item">Критичность CVSS</th>
+                        <th class="table_item">Где выявлено</th>
+                        <th class="table_item">Когда выявлено</th>
+                        <th class="table_item table_item_status">Статус уязвимости</th>
+                        <th class="table_item table_item_del">Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table_row">
+                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-2023-1</td>
+                        <td class="table_item">XSS</td>
+                        <td class="table_item">Возможность сделать XSS</td>
+                        <td class="table_item table_item_cvss">8.0 Высокая</td>
+                        <td class="table_item">Web</td>
+                        <td class="table_item">04.03.2023</td>
+                        <td class="table_item table_item_status">
+                            <select>
+                                <option value="vuln_actual" selected>Актуальна</option>
+                                <option value="vuln_fixed">Устранена</option>
+                            </select>
+                        </td>
+                        <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="release_footer">
+                <input type="button" class="btn" id="confirmFix_btn" value="Зафиксировать устранение">
+                <div class="approve_container">
+                    <input type="checkbox" id="approve_check">
+                    <label for="approve_check">Подтверждение готовности релиза к отчету</label>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div id="add_release_modal">
+        <div id="add_release_modal_content">
+            <form action="#" method="post" id="release_add_form" class="form_body">
+                <h3>Новый релиз</h3>
+                <label for="release_num_input">Номер релиза
+                    <input type="text" name="release_number" id="release_num_input" placeholder="R109 + 17.9" required>
+                </label>
+                <label for="release_start_date_input">Дата начала
+                    <input type="date" id="release_start_date_input" required name="release-start-date" required
+                    value="2023-03-21"
+                    min="2020-01-01" max="2099-12-31">
+                </label>
+                <label for="release_end_date_input">Дата окончания
+                    <input type="date" id="release_end_date_input" required name="release-end-date" required
+                    value="2023-03-21"
+                    min="2020-01-01" max="2099-12-31">
+                </label>
+                <label for="release_rds_input">Номер задачи в RDS
+                    <input type="text" name="release-rds" id="release_rds_input" required>
+                </label>
+                <label for="release_prefix_input">Префикс
+                    <input type="text" name="release-vuln-prefix" id="release_prefix_input" value="VTBO-2023-" required>
+                </label>
+                <label for="release_scope_input">Область и обьект тестирования
+                    <textarea name="release-scope" id="release_scope_input" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                </label>
+                <input type="submit" class="btn" value="Добавить проект">
+            </form>
+        </div>
+    </div>
+    <script src="scripts/release_page_script.js"></script>
+</body>
+</html>

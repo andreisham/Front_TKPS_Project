@@ -94,6 +94,7 @@ input.addEventListener('keyup', function(e) {
     addTags()
     input.value = ''
     createLink()
+    console.log(tags)
   }
 })
 
@@ -290,7 +291,6 @@ async function handleFormSubmit(event) {
   const response = await sendData(data)
 }
 
-
 // сбор данных с формы
 function serializeForm(formNode) {
 
@@ -336,7 +336,6 @@ async function sendData(data) {
     form.classList.remove('_sending')
   });
 }
-
 
 const applicantForm = document.getElementById('vuln_add_form')
 applicantForm.addEventListener('submit', handleFormSubmit)

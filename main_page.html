@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Главная</title>
+</head>
+<body>
+    <h1>Проекты</h1>
+    <div class="main_wrapper">
+        <div class="project_block" onclick='location.href="#"'>
+            <h3 class="project_name">ВТБ Онлайн</h3>
+            <div class="project_block__release">
+                <span class="actual_release">Текущий релиз:</span><span>R109 + 17.9</span>
+            </div>
+            <div class="project_block__vulns">
+                <span>10</span><span class="actual_vulns">актуальных уязвимостей</span>
+            </div>
+        </div>
+        <div class="project_block" onclick='location.href="#"'>
+            <h3 class="project_name">ВТБ Онлайн</h3>
+            <div class="project_block__release">
+                <span class="actual_release">Текущий релиз:</span><span>R109 + 17.9</span>
+            </div>
+            <div class="project_block__vulns">
+                <span>10</span><span class="actual_vulns">актуальных уязвимостей</span>
+            </div>
+        </div>
+        <div class="project_block" id="add_project_block" title="Добавить проект"></div>
+    </div>
+    <div id="add_project_modal">
+        <div id="add_project_modal_content">
+            <h3>Новый проект</h3>
+            <label for="project_add_input">Название проекта
+                <input type="text" name="" id="project_add_input">
+            <input type="button" class="btn" value="Добавить проект">
+            </label>
+        </div>
+    </div>
+    <script src="scripts/main_page_script.js"></script>
+</body>
+</html>
