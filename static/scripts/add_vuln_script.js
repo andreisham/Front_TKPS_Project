@@ -26,13 +26,13 @@ let cvss_vector_string = document.querySelector('#vectorString')
 let page_vector_string = document.querySelector('#page_vector_string')
 
 function render_cvss_rating(){
-  page_cvss_score.textContent = cvss_score.textContent
+  page_cvss_score.value = cvss_score.textContent
   page_cvss_severity.textContent = cvss_severity.textContent
   page_vector_string.value = cvss_vector_string.value
   page_vector_string.onchange = function() {
     window.location.href =  str.replace(/.html#/gi, page_vector_string.value);
   }
-  setCritical(page_cvss_score.textContent)
+  setCritical(page_cvss_score.value)
 }
 
 // определение критичности (подкрашивание)

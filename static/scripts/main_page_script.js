@@ -51,5 +51,11 @@ function createBlock(project_name) {
     project_blocks.insertBefore(div, btnOpenModal)
 
     // перенаправление на страницу релиза
-    location.href = "http://127.0.0.1:5500/release_page.html"
+    // location.href = "http://127.0.0.1:5500/release_page.html"
+
+
+    // TODO пост запрос с данными проекта
 }
+
+
+  
