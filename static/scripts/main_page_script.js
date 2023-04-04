@@ -25,16 +25,17 @@ let add_btn = document.querySelector('.btn')
 
 
 add_btn.onclick = function() {
-    let project_name = document.querySelector('#project_add_input').value
-    if (project_name === "") {
+    let project_name = document.querySelector('#project_name_input').value
+    let project_prefix = document.querySelector('#project_prefix_input').value
+    if (project_name === "" || project_prefix === "") {
         alert("Пожалуйста, введите название проекта.");
         return;
     }
-    createBlock(project_name)
+    createBlock(project_name,project_prefix)
 }
 
 // создание и добавление блока прокета
-function createBlock(project_name) {
+function createBlock(project_name,project_prefix) {
     const div = document.createElement('div')
     div.setAttribute('class','project_block')
     div.setAttribute('onclick','location.href="#"')
@@ -49,13 +50,41 @@ function createBlock(project_name) {
     i++
 
     project_blocks.insertBefore(div, btnOpenModal)
+    let data = {
+        name: project_name,
+        prefix: project_prefix
+    }
+    console.log(data)
+    sendProjectInfo(data)
 
     // перенаправление на страницу релиза
-    // location.href = "http://127.0.0.1:5500/release_page.html"
+    //
 
 
-    // TODO пост запрос с данными проекта
+    // TODO пост запрос с данными проекта и перезагрузить страницу
 }
 
+// async function handleFormSubmit(event) {
+//     event.preventDefault()
+//
+//
+//     const data = serializeForm(event.target)
+//
+//     const response = await
+// }
 
+async function sendProjectInfo(data) {
+    return await fetch('/api/qwe', {
+        method: 'POST',
+        body: data,
+    }).then(response => {
+        if (response.ok) {
+            //response.json()
+            location.reload()
+
+        }
+    }).catch(error => {
+        alert('Ошибка отправки' + error)
+    });
+}
   

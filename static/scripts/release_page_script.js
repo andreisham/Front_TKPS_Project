@@ -86,17 +86,17 @@ async function handleFormSubmit(event) {
   
   // отправка данных
   async function sendData(data) {
-    return await fetch('/api/apply/', {
+    return await fetch('/', {
       method: 'POST',
       body: data,
     }).then(response => {
       if (response.ok) {
-        form.reset()
-        form.classList.remove('_sending')
+          applicantForm.reset()
+          applicantForm.classList.remove('_sending')
       }
     }).catch(error => {
       alert('Ошибка отправки' + error)
-      form.classList.remove('_sending')
+        applicantForm.classList.remove('_sending')
     });
   }
   

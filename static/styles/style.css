@@ -101,7 +101,7 @@ textarea {
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  overflow:hidden
+  overflow:auto;
 }
 
 select {
@@ -119,7 +119,7 @@ select {
 
 input[type="date"] {
   width: 100%;
-  padding: 10px 0px 10px 10px;
+  padding: 10px 0 10px 10px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -353,7 +353,7 @@ h3 {
   background-color: red;
 }
 
-.middle {
+.medium {
   background-color: #f9a009;
 }
 
@@ -410,6 +410,7 @@ h3 {
   padding: 5px;
   outline: none;
   border: 0;
+  min-width: 180px;
 }
 
 
@@ -743,4 +744,46 @@ input[type="number"]:disabled {
 	outline: none;
   background-color: transparent;
   color: #000;
+}
+
+.vuln_header {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content:  space-evenly;
+  align-items: baseline;
+  flex-wrap: wrap;
+
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #c5c5c5;
+}
+
+#delVuln_btn {
+  background-image: url("../img/iconfinder_delete_forever_ic_3669360.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.vuln_info {
+  display: grid;
+  grid-template-columns: 30% 30%;
+  grid-template-rows: 1fr 1fr 0.75fr 1fr;
+  gap: 20px 30px;
+  justify-content: center;
+  justify-items: stretch;
+  align-items: start;
+}
+#vuln_card_cvss {
+  display: flex;
+  flex-wrap: wrap;
+  width: 20%;
+  justify-content: space-between;
+}
+
+.container {
+  max-width: 80%;
+  margin: 0 auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }

@@ -59,7 +59,7 @@ function setCritical(result) {
         level.className = 'high'
     } else if (1.5 <= result && result < 4.5) {
         level.innerText = 'Средний'
-        level.className = 'middle'
+        level.className = 'medium'
     } else if (result < 1.5) {
         level.innerText = 'Низкий'
         level.className = 'low'
