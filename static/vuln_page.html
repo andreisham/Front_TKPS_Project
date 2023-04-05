@@ -6,8 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VTBO-2023-1</title>
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <div class="menu_wrapper top_menu_wrapper">
+        <ol class="menu">
+            <li class="menu_item" title="Текущий проект"><a href="main_page.html">ВТБ Онлайн</a></li>
+            <li class="menu_item" title="Страница релизов"><a href="release_page.html">Релизы</a></li>
+            <li class="logo menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
+            <li class="menu_item" title="Все когда либо найденные уязвимости"><a href="#">БД уязвимостей</a></li>
+            <li class="menu_item" title="Отчеты, графики, дашборды"><a href="#">Отчеты</a></li>
+        </ol>
+    </div>
     <div class="container">
         <header class="vuln_header">
             <h1>XSS</h1>
@@ -93,81 +103,92 @@
         <!--        <input type="text" name="vuln-vector-cvss" required id="page_vector_string">-->
         <!--        <input type="button" value="Рассчитать CVSS 3.1" class="btn" id="cvss-button">-->
         <!--    </div>-->
-        <details>
-            <summary>Свидетельства обнаружения</summary>
-            <form method="post" action="">
-                <div class="row vulns-detail">
-                    <h3>Свидетельства обнаружения</h3>
-                    <input type="button" class="btn add_btn" value="Добавить блок" onclick="openModalAddBlock()">
-                    <div class="description_block detail_block" draggable="true">
-                        <div class="move_icon"></div>
-                        <textarea data-i="descr-${i}" name="description-${i}" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea>
-                        <input type="button" class="btn" required value="Добавить блок" onclick="openModalAddBlock()">
-                        <div class="del_icon" onclick="this.parentElement.remove()"></div>
-                    </div>
-                    <div class="image_block detail_block" draggable="true">
-                        <div class="move_icon"></div>
-                        <div class="input__wrapper">
-                            <input name="file-${i}" type="file" data-i="file_input-${i}" required accept=".jpg, .png, .gif" id="input__file-${i}" class="input input__file">
-                            <label for="input__file-${i}" class="input__file-button btn">
-                                <span class="input__file-icon-wrapper"><img class="input__file-icon" src="./img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
-                                <span class="input__file-button-text">Выберите файл</span>
-                            </label>
-                            <div class="preview_img_div"><img src="#" class="preview_img"></div>
+        <div class="details_div">
+            <details>
+                <summary>Свидетельства обнаружения</summary>
+                <form method="post" action="">
+                    <div class="row vulns-detail">
+                        <input type="button" class="btn add_btn" value="Добавить блок" onclick="openModalAddBlock()">
+                        <div class="description_block detail_block" draggable="true">
+                            <div class="move_icon"></div>
+                            <textarea data-i="descr-${i}" name="description-${i}" cols="30" rows="2" onkeyup="textAreaAdjust(this)">Какие то детали нахождения уязвимости</textarea>
+                            <input type="button" class="btn" required value="Добавить блок" onclick="openModalAddBlock()">
+                            <div class="del_icon" onclick="this.parentElement.remove()"></div>
                         </div>
-                        <textarea name="image_descr-${i}" data-i="image_descr-${i}" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-                        <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">
-                        <div class="del_icon" onclick="this.parentElement.remove()"></div>
-                    </div>
+                        <div class="image_block detail_block" draggable="true">
+                            <div class="move_icon"></div>
+                            <div class="input__wrapper">
+                                <input name="file-${i}" type="file" data-i="file_input-${i}" required accept=".jpg, .png, .gif" id="input__file-${i}" class="input input__file">
+                                <label for="input__file-${i}" class="input__file-button btn">
+                                    <span class="input__file-icon-wrapper"><img class="input__file-icon" src="./img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
+                                    <span class="input__file-button-text">image.png</span>
+                                </label>
+                                <!-- Здесь надо в атрибут src добавить ссылку на файл -->
+                                <a href="img/loading.gif" target="_blank"><div class="preview_img_div preset"><img src="img/loading.gif" class="preview_img"></div></a>
+                            </div>
+                            <textarea name="image_descr-${i}" data-i="image_descr-${i}" cols="30" rows="2" required onkeyup="textAreaAdjust(this)">Рисунок 1 - тут шо то происходит</textarea>
+                            <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">
+                            <div class="del_icon" onclick="this.parentElement.remove()"></div>
+                        </div>
 
-                    <div id="detail-modal">
-                        <div id="detail_modal_content">
-                            <h3>Выбор блока</h3>
-                            <label> Выберите тип блока
-                                <select>
-                                    <option value="description_block_option" selected>Описание</option>
-                                    <option value="image_block_option">Изображение с подпиьсю</option>
-                                </select>
-                                <input type="button" class="btn" value="Добавить блок" onclick="addBlock(this.previousElementSibling)">
-                            </label>
+                        <div id="detail-modal">
+                            <div id="detail_modal_content">
+                                <h3>Выбор блока</h3>
+                                <label> Выберите тип блока
+                                    <select>
+                                        <option value="description_block_option" selected>Описание</option>
+                                        <option value="image_block_option">Изображение с подпиьсю</option>
+                                    </select>
+                                    <input type="button" class="btn" value="Добавить блок" onclick="addBlock(this.previousElementSibling)">
+                                </label>
+                            </div>
                         </div>
+                    </div>
+                    <input type="submit" value="Обновить свидетельства" class="btn">
+                </form>
+            </details>
+            <details>
+                <summary>Комментарии от владельцев</summary>
+                <div class="details_content">
+                    <div class="row">
+                        <label>Результат решения по работам
+                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                        </label>
+                        <label>Ссылка на RDS/инцидент
+                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>Стрим ответственный за устранение
+                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                        </label>
+                        <label>Срок устранения
+                            <input type="date" required name="vuln-date-of-discovery"
+                                   min="2020-01-01" max="2099-12-31">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>ФИО ответственного
+                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                        </label>
+                        <label>Источник информациии
+                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                        </label>
                     </div>
                 </div>
-                <input type="submit" value="Обновить свидетельства" class="btn">
-            </form>
-        </details>
-        <details>
-            <summary>Комментарии от владельцев</summary>
-            <div class="row">
-                <label>Результат решения по работам
-                    <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-                </label>
-                <label>Ссылка на RDS/инцидент
-                    <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-                </label>
-            </div>
-            <div class="row">
-                <label>Стрим ответственный за устранение
-                    <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-                </label>
-                <label>Срок устранения
-                    <input type="date" required name="vuln-date-of-discovery"
-                           value="2023-03-21"
-                           min="2020-01-01" max="2099-12-31">
-                </label>
-            </div>
-            <div class="row">
-                <label>ФИО ответственного
-                    <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-                </label>
-                <label>Источник информациии
-                    <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-                </label>
-            </div>
-        </details>
+            </details>
+        </div>
+        <div class="vuln_note">
+            <label>Примечания
+                <textarea name="vuln-note" cols="30" rows="2" ></textarea>
+            </label>
+        </div>
     </div>
 
 <script src="scripts/vuln_page_script.js"></script>
 <script src="scripts/tags.js"></script>
+<script src="scripts/modalCVSS.js"></script>
+<script src="scripts/vuln_details.js"></script>
+
 </body>
 </html>

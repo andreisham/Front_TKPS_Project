@@ -50,18 +50,12 @@ function createBlock(project_name,project_prefix) {
     i++
 
     project_blocks.insertBefore(div, btnOpenModal)
-    let data = {
-        name: project_name,
-        prefix: project_prefix
-    }
-    console.log(data)
-    sendProjectInfo(data)
 
-    // перенаправление на страницу релиза
-    //
+    const formdata = new FormData()
 
-
-    // TODO пост запрос с данными проекта и перезагрузить страницу
+    formdata.append(project_name,project_prefix)
+    console.log(formdata)
+    sendProjectInfo(formdata)
 }
 
 // async function handleFormSubmit(event) {
