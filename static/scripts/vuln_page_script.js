@@ -11,14 +11,64 @@ window.onload =function () {
     })
     // обновление ссылкок
     createLink()
+
+    // обновление cvss
+    setCriticalVulnPage(cvss_score_p.innerHTML)
+    render_cvss_rating()
+    setCvssVector()
 }
 
-// наполнение содержимым свидетельств
-// открытие увеличенного изображения в новой вкладке
-let preview_images = document.querySelectorAll('.preview_img')
-preview_images.forEach(function (preview_img) {
-    // preview_img.parentElement.onclick = function() {
-    //     var win = window.open();
-    //     win.document.write('<img src="C:\\Users\\User\\Documents\\Front_VulnTrack\\static\\img\\loading.gif" style="width:100%; height:100%;">');
-    // };
-})
+let cvss_severity_p = document.querySelector('.cvss_severity')
+let cvss_score_p = document.querySelector('.cvss_score')
+let cvss_vector_p = document.querySelector('.cvss_vector')
+let cvss_score = document.querySelector('#environmentalMetricScore')
+let cvss_severity = document.querySelector('#environmentalSeverity')
+let cvss_vector_string = document.querySelector('#vectorString')
+setCriticalVulnPage(cvss_score_p.innerHTML)
+setCvssVector()
+
+function setCvssVector() {
+
+}function translateCvss(cvss_severity) {
+    if (cvss_severity.textContent === '(None)') {
+        cvss_severity.textContent = 'None'
+    } else if (cvss_severity.textContent === '(Low)') {
+        cvss_severity.textContent = 'Низкий'
+    } else if (cvss_severity.textContent === '(Medium)') {
+        cvss_severity.textContent = 'Средний'
+    } else if (cvss_severity.textContent === '(High)') {
+        cvss_severity.textContent = 'Высокий'
+    } else if (cvss_severity.textContent === '(Critical)') {
+        cvss_severity.textContent = 'Критический'
+    }
+}
+// todo руссификация cvss
+cvss_severity.DOMSubtreeModified = function () {
+    translateCvss(cvss_severity)
+}
+
+// Обновление критичности
+function setCriticalVulnPage(result) {
+    if (9.0 <= result) {
+        cvss_severity_p.className = 'critical_text'
+        cvss_score_p.className = 'critical_text'
+    } else if (7.0 <= result && result < 9.0) {
+        cvss_severity_p.className = 'high_text'
+        cvss_score_p.className = 'high_text'
+    } else if (4.0 <= result && result < 7.0) {
+        cvss_severity_p.className = 'medium_text'
+        cvss_score_p.className = 'medium_text'
+    } else if (result < 4.0) {
+        cvss_severity_p.className = 'low_text'
+        cvss_score_p.className = 'low_text'
+    }
+}
+
+// рендер cvss
+function render_cvss_rating() {
+    cvss_score_p.innerHTML = cvss_score.textContent
+    cvss_severity_p.innerHTML = cvss_severity.textContent
+    cvss_vector_p.innerHTML = cvss_vector_string.value
+
+    setCriticalVulnPage(cvss_score_p.innerHTML)
+}

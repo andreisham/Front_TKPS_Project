@@ -385,6 +385,25 @@ h3 {
   background-color: green;
 }
 
+.critical_text {
+  color: #cb1f03;
+  font-weight: 600;
+}
+
+.high_text {
+  color: red;
+  font-weight: 600;
+}
+
+.medium_text {
+  color: #f9a009;
+  font-weight: 600;
+}
+
+.low_text {
+  color: green;
+  font-weight: 600;
+}
 .close-icon {
   position: relative;
   display: inline-block;
@@ -686,7 +705,7 @@ h3 {
 #error_span {
   position: absolute;
   right: 0;
-  top: 150px;
+  top: 70px;
   color: red;
   display: none;
 }
@@ -912,3 +931,41 @@ details[open] summary:before {
   transform: rotate(180deg);
 }
 
+.wrapper_404 {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: white;
+  font-size: 3em;
+}
+
+.h1_404 {
+  font-weight: bold;
+  font-size: 5em;
+  margin: 0;
+  color: #3A79FF;
+}
+
+.p_404 {
+  margin: 0;
+  font-size: 2em;
+}
+
+.a_404 {
+  margin-top: 1em;
+  font-size: 1.5em;
+}
+
+.rickroll {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/rickroll.gif");
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: -1;
+}

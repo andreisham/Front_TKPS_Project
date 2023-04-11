@@ -81,15 +81,7 @@ function openModalAddBlock() {
     modalDetail.style.display = "flex";
 }
 
-// Добавляем обработчик события для закрытия модального окна при щелчке вне модального окна
-window.onclick = function(event) {
-    if (event.target == modalDetail ) {
-        modalDetail.style.display = "none";
-    } else if (event.target == modal) {
-        modal.style.display = "none";
-        render_cvss_rating()
-    }
-}
+
 
 // создание блока
 let i = 0; // инкрементное значение для id файловых импутов
