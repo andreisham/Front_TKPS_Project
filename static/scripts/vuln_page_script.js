@@ -51,6 +51,11 @@ cvss_severity.DOMSubtreeModified = function () {
     translateCvss(cvss_severity)
 }
 
+// Добавление обработки на загрузку файлов
+document.querySelector('input[type="file"]').addEventListener('change', function (e) {
+    imageUploader(e)
+})
+
 // Обновление критичности
 function setCriticalVulnPage(result) {
     if (9.0 <= result) {

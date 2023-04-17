@@ -17,7 +17,8 @@ function uploadFile(file,file_input,label,labelVal) {
 // превью картинок
 function previewImage(element) {
     let file    = element.files;
-    let preview_img = element.nextElementSibling.nextElementSibling.firstChild;
+    let preview_substr = element.nextElementSibling.nextElementSibling.firstChild
+    let preview_img = preview_substr === document.querySelector('.preview_img_div') ? preview_substr.firstChild : preview_substr;
 
     console.log(preview_img)
 
@@ -99,27 +100,31 @@ function createBlock(selectedValue) {
     } else if (selectedValue == 'image_block_option') { // блок с изображением
         div.setAttribute('class','image_block detail_block')
         div.innerHTML = `<div class="move_icon"></div>
-      <div class="input__wrapper">
-          <input name="file-${i}" type="file" data-i="file_input-${i}" required accept=".jpg, .png, .gif" id="input__file-${i}" class="input input__file">
-          <label for="input__file-${i}" class="input__file-button btn">
-              <span class="input__file-icon-wrapper"><img class="input__file-icon" src="./img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
-              <span class="input__file-button-text">Выберите файл</span>
-          </label>
-          <div class="preview_img_div"><img src="#" class="preview_img"></div>
-          </div>
-      <textarea name="image_descr-${i}" data-i="image_descr-${i}" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-      <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">
-      <div class="del_icon" onclick="this.parentElement.remove()"></div>`
+          <div class="input__wrapper">
+              <input name="file-${i}" type="file" data-i="file_input-${i}" required accept=".jpg, .png, .gif" id="input__file-${i}" class="input input__file">
+              <label for="input__file-${i}" class="input__file-button btn">
+                  <span class="input__file-icon-wrapper"><img class="input__file-icon" src="./img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
+                  <span class="input__file-button-text">Выберите файл</span>
+              </label>
+              <div class="preview_img_div"><img src="#" class="preview_img"></div>
+              </div>
+          <textarea name="image_descr-${i}" data-i="image_descr-${i}" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+          <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">
+          <div class="del_icon" onclick="this.parentElement.remove()"></div>`
         modalDetail.style.display = "none"
         i++
         div.querySelector('input[type="file"]').addEventListener('change', function (e) {
-            console.log(e)
-            let label = e.target.nextElementSibling
-            let labelVal = label.querySelector('.input__file-button-text').innerText;
-            uploadFile(e.target.files[0], e.target, label, labelVal)
+            imageUploader(e)
         })
     }
     return div
+}
+
+function imageUploader(e) {
+    console.log(e)
+    let label = e.target.nextElementSibling
+    let labelVal = label.querySelector('.input__file-button-text').innerText;
+    uploadFile(e.target.files[0], e.target, label, labelVal)
 }
 
 // добавление блоков на страницу
