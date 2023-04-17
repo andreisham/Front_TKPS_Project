@@ -23,8 +23,8 @@
             <h1>XSS</h1>
             <p>ID: VTBO-2023-1</p>
             <div id="vuln_card_cvss">
-                <p class="cvss_severity">Высокий</p>
-                <p class="cvss_score">8.5</p>
+                <p class="cvss_severity">Критический</p>
+                <p class="cvss_score">9.1</p>
                 <p class="cvss_vector">CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H</p>
             </div>
             <p>Актуальна с релиза 17.9</p>
@@ -38,7 +38,7 @@
                 <input type="button" class="btn cvss-button" id="editCVSS_btn" value="Пересчитать критичность">
                 <input type="button" class="btn" id="FalsePositive_btn" title="Перевести уязвимость в статус False positive" value="False positive">
                 <input type="button" class="btn" id="delVuln_btn" title="Удалить уязвимость">
-                <a href="release_page.html" class="btn" id="add_vuln_btn">Назад</a>
+                <a href="#" onclick="history.back(); return false;" class="btn" id="add_vuln_btn">Назад</a>
             </div>
         </header>
     <div class="vuln_info">

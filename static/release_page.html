@@ -63,7 +63,27 @@
                 </thead>
                 <tbody>
                     <tr class="table_row">
-                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-2023-2</td>
+                        <td class="table_item table_item_link" onclick="myFunc(this)">VTBO-2023-2</td>
+                        <td class="table_item">SQLi</td>
+                        <td class="table_item">Возможность сделать SQLi</td>
+                        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+                        <td class="table_item">Web</td>
+                        <td class="table_item">15.03.2023</td>
+                        <td class="table_item table_item_status">Новая</td>
+                        <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
+                    </tr>
+                    <tr class="table_row">
+                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-22023-2</td>
+                        <td class="table_item">SQLi</td>
+                        <td class="table_item">Возможность сделать SQLi</td>
+                        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+                        <td class="table_item">Web</td>
+                        <td class="table_item">15.03.2023</td>
+                        <td class="table_item table_item_status">Новая</td>
+                        <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
+                    </tr>
+                    <tr class="table_row">
+                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-20123-2</td>
                         <td class="table_item">SQLi</td>
                         <td class="table_item">Возможность сделать SQLi</td>
                         <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>

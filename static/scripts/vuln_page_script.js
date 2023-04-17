@@ -13,9 +13,11 @@ window.onload =function () {
     createLink()
 
     // обновление cvss
+    setCvssVector()
     setCriticalVulnPage(cvss_score_p.innerHTML)
     render_cvss_rating()
-    setCvssVector()
+    translateCvss(cvss_severity_p)
+
 }
 
 let cvss_severity_p = document.querySelector('.cvss_severity')
@@ -28,18 +30,20 @@ setCriticalVulnPage(cvss_score_p.innerHTML)
 setCvssVector()
 
 function setCvssVector() {
+    window.location.hash = cvss_vector_p.innerHTML
+}
 
-}function translateCvss(cvss_severity) {
-    if (cvss_severity.textContent === '(None)') {
-        cvss_severity.textContent = 'None'
-    } else if (cvss_severity.textContent === '(Low)') {
-        cvss_severity.textContent = 'Низкий'
-    } else if (cvss_severity.textContent === '(Medium)') {
-        cvss_severity.textContent = 'Средний'
-    } else if (cvss_severity.textContent === '(High)') {
-        cvss_severity.textContent = 'Высокий'
-    } else if (cvss_severity.textContent === '(Critical)') {
-        cvss_severity.textContent = 'Критический'
+function translateCvss(cvss_critical) {
+    if (cvss_critical.textContent === '(None)') {
+        cvss_critical.textContent = 'None'
+    } else if (cvss_critical.textContent === '(Low)') {
+        cvss_critical.textContent = 'Низкий'
+    } else if (cvss_critical.textContent === '(Medium)') {
+        cvss_critical.textContent = 'Средний'
+    } else if (cvss_critical.textContent === '(High)') {
+        cvss_critical.textContent = 'Высокий'
+    } else if (cvss_critical.textContent === '(Critical)') {
+        cvss_critical.textContent = 'Критический'
     }
 }
 // todo руссификация cvss
@@ -71,4 +75,5 @@ function render_cvss_rating() {
     cvss_vector_p.innerHTML = cvss_vector_string.value
 
     setCriticalVulnPage(cvss_score_p.innerHTML)
+    translateCvss(cvss_severity_p)
 }

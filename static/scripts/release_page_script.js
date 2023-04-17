@@ -102,3 +102,11 @@ async function handleFormSubmit(event) {
   
   const applicantForm = document.getElementById('release_add_form')
   applicantForm.addEventListener('submit', handleFormSubmit)
+
+
+function myFunc(vuln) {
+    vuln_id = vuln.innerHTML
+    console.log(vuln_id)
+    console.log(vuln)
+    window.location.href = "/api/qwe"
+}
