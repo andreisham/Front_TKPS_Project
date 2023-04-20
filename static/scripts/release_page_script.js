@@ -42,10 +42,37 @@ btnOpenModal.onclick = function() {
 
 // Добавляем обработчик события для закрытия модального окна при щелчке вне модального окна
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target === modal) {
         modal.style.display = "none";
     }
 }
+// =============== Модальное окно изменения релиза ===============
+let modal_edit = document.getElementById('edit_release_modal');
+let btnOpenModalEdit = document.getElementById('edit_release_btn');
+
+// Добавляем обработчик события для открытия модального окна
+btnOpenModalEdit.onclick = function() {
+    modal_edit.style.display = "flex";
+    fillFields()
+}
+// Добавляем обработчик события для закрытия модального окна при щелчке вне модального окна
+window.onclick = function(event) {
+    if (event.target === modal_edit) {
+        modal_edit.style.display = "none";
+    }
+}
+// заполнение полей для редактирвоания релиза
+let releaseName = document.querySelector('.release_header h1')
+let startDate = document.querySelector('#start_Date')
+let endDate = document.querySelector('#end_Date')
+
+function fillFields() {
+    applicantEditForm.release_number.value = releaseName.innerHTML
+    // ебатория ниже ругается на неверный формат даты. в правой части приходит в формате dd.mm.yyyy, а ему надо yyyy-mm-dd
+    // applicantEditForm.edit_release_start_date_input.value = startDate.innerHTML.slice(12)
+    // applicantEditForm.edit_release_end_date_input.value = endDate.innerHTML.slice(15)
+}
+
 
 // // ресайз textarea в зависимости от контента
 function textAreaAdjust(element) {
@@ -101,11 +128,14 @@ async function handleFormSubmit(event) {
   }
   
   const applicantForm = document.getElementById('release_add_form')
+  const applicantEditForm = document.getElementById('release_edit_form')
+
   applicantForm.addEventListener('submit', handleFormSubmit)
+  applicantEditForm.addEventListener('submit', handleFormSubmit)
 
 
 function myFunc(vuln) {
-    vuln_id = vuln.innerHTML
+    let vuln_id = vuln.innerHTML
     console.log(vuln_id)
     console.log(vuln)
     window.location.href = "/api/qwe"

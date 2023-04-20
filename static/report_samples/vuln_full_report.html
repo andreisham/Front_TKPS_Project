@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <title>Full Report</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin: 30px 0 20px 0;
+      text-align: center;
+    }
+    .vuln_card_cvss {
+      display: flex;
+    }
+    .vuln_card_cvss p {
+      margin-right: 10px;
+      font-weight: 600;
+    }
+    .vuln_header {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: baseline;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      border-bottom: 1px solid #c5c5c5;
+      border-top: 1px solid #c5c5c5;
+    }
+    .critical_text {
+      color: #cb1f03;
+      font-weight: 600;
+    }
+
+    .high_text {
+      color: red;
+      font-weight: 600;
+    }
+
+    .medium_text {
+      color: #f9a009;
+      font-weight: 600;
+    }
+
+    .low_text {
+      color: green;
+      font-weight: 600;
+    }
+    .critical_cvss {
+      background-color: #cb1f03;
+    }
+
+    .high_cvss {
+      background-color: red;
+    }
+
+    .medium_cvss {
+      background-color: #f9a009;
+    }
+
+    .low_cvss {
+      background-color: green;
+    }
+    .vuln_info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 50px;
+    }
+    .vuln_row {
+      margin: 20px 0;
+    }
+    .vuln_row h2 {
+      margin-bottom: 10px;
+    }
+    .detail_block {
+      margin-top: 25px;
+    }
+    .image_block {
+      text-align: center;
+    }
+    .image_block p {
+      margin-top: 10px;
+    }
+    .details_img {
+      max-width: 90%;
+    }
+    .table {
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+    .table_header {
+      background-color: #f2f2f2;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+    .table_item {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+    .table_item_status {
+      width: 130px;
+      text-align: center;
+    }
+    .table_item_link {
+      cursor: pointer;
+    }
+    .table_item_cvss {
+      text-align: center;
+    }
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+    a:visited {
+      text-decoration: none;
+    }
+    .top_wrapper {
+      margin-bottom: 40px;
+    }
+    caption {
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    @media print {
+      section {
+        page-break-before: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top_wrapper">
+    <h1>Описание уязвимостей, выявленных в ходе тестирования в период 13.03.2023 - 17.03.2023 релиза R109 и 17.9</h1>
+
+    <table class="table new_vuln">
+      <caption>Перечень выявленных уязвимостей</caption>
+      <thead>
+        <tr class="table_header table_row">
+          <th class="table_item">ID Уязвимости</th>
+          <th class="table_item">Наименование уязвимости</th>
+          <th class="table_item">Критичность CVSS</th>
+          <th class="table_item">Где выявлено</th>
+          <th class="table_item table_item_status">Статус уязвимости</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table_row">
+          <td class="table_item table_item_link"><a href="#VTBO-2023-1">VTBO-2023-1</a></td>
+          <td class="table_item">SQLi</td>
+          <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+          <td class="table_item">Web</td>
+          <td class="table_item table_item_status">Новая</td>
+        </tr>
+        <tr class="table_row">
+          <td class="table_item table_item_link"><a href="#VTBO-2023-2">VTBO-2023-2</a></td>
+          <td class="table_item">SQLi</td>
+          <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+          <td class="table_item">Web</td>
+          <td class="table_item table_item_status">Новая</td>
+        </tr>
+        <tr class="table_row">
+          <td class="table_item table_item_link"><a href="#VTBO-2023-3">VTBO-2023-3</a></td>
+          <td class="table_item">SQLi</td>
+          <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+          <td class="table_item">Web</td>
+          <td class="table_item table_item_status">Новая</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="vuln_item">
+    <div id="VTBO-2023-1" class="vuln_header">
+      <h1>SQL Injection</h1>
+      <p >ID: VTBO-2023-1</p>
+      <div class="vuln_card_cvss">
+        <p>Критичность:</p>
+        <p class="cvss_severity critical_text">Критический</p>
+      </div>
+    </div>
+    <div class="vuln_info">
+      <div class="vuln_row">
+        <h2>Подробное описание уязвимости:</h2>
+        <p>Возможность сделать SQLi</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Последствия эксплуатации:</h2>
+        <p>будет не очень</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Компоненты ИС, в которых выявлены уязвимости:</h2>
+        <p>https://somwhere.com</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Классификация уязвимости:</h2>
+        <p>CWE-222</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Ссылки на открытые источники с информацией об уязвимости:</h2>
+        <p>https://cwe.mitre.org/data/defenitions/222.html</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Рекомендации по устранению и (или) снижению риска:</h2>
+        <p>Лучше устранить</p>
+      </div>
+      <div class="details_div">
+        <h2>Свидетельства обнаружения</h2>
+        <div class="vuln_row vulns-detail">
+          <div class="description_block detail_block">
+            <p>Какие то детали нахождения уязвимости</p>
+          </div>
+          <div class="image_block detail_block">
+            <img src="../img/loading.gif" class="details_img">
+            <p>Рисунок 1 - тут шо то происходит</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="vuln_item">
+    <div id="VTBO-2023-2" class="vuln_header">
+      <h1>SQL Injection</h1>
+      <p >ID: VTBO-2023-2</p>
+      <div class="vuln_card_cvss">
+        <p>Критичность:</p>
+        <p class="cvss_severity critical_text">Критический</p>
+      </div>
+    </div>
+    <div class="vuln_info">
+      <div class="vuln_row">
+        <h2>Подробное описание уязвимости:</h2>
+        <p>Возможность сделать SQLi</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Последствия эксплуатации:</h2>
+        <p>будет не очень</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Компоненты ИС, в которых выявлены уязвимости:</h2>
+        <p>https://somwhere.com</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Классификация уязвимости:</h2>
+        <p>CWE-222</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Ссылки на открытые источники с информацией об уязвимости:</h2>
+        <p>https://cwe.mitre.org/data/defenitions/222.html</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Рекомендации по устранению и (или) снижению риска:</h2>
+        <p>Лучше устранить</p>
+      </div>
+      <div class="details_div">
+        <h2>Свидетельства обнаружения</h2>
+        <div class="vuln_row vulns-detail">
+          <div class="description_block detail_block">
+            <p>Какие то детали нахождения уязвимости</p>
+          </div>
+          <div class="image_block detail_block">
+            <img src="../img/loading.gif" class="details_img">
+            <p>Рисунок 1 - тут шо то происходит</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="vuln_item">
+    <div id="VTBO-2023-3" class="vuln_header">
+      <h1>SQL Injection</h1>
+      <p>ID: VTBO-2023-3</p>
+      <div class="vuln_card_cvss">
+        <p>Критичность:</p>
+        <p class="cvss_severity critical_text">Критический</p>
+      </div>
+    </div>
+    <div class="vuln_info">
+      <div class="vuln_row">
+        <h2>Подробное описание уязвимости:</h2>
+        <p>Возможность сделать SQLi</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Последствия эксплуатации:</h2>
+        <p>будет не очень</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Компоненты ИС, в которых выявлены уязвимости:</h2>
+        <p>https://somwhere.com</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Классификация уязвимости:</h2>
+        <p>CWE-222</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Ссылки на открытые источники с информацией об уязвимости:</h2>
+        <p>https://cwe.mitre.org/data/defenitions/222.html</p>
+      </div>
+      <div class="vuln_row">
+        <h2>Рекомендации по устранению и (или) снижению риска:</h2>
+        <p>Лучше устранить</p>
+      </div>
+      <div class="details_div">
+        <h2>Свидетельства обнаружения</h2>
+        <div class="vuln_row vulns-detail">
+          <div class="description_block detail_block">
+            <p>Какие то детали нахождения уязвимости</p>
+          </div>
+          <div class="image_block detail_block">
+            <img src="../img/loading.gif" class="details_img">
+            <p>Рисунок 1 - тут шо то происходит</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

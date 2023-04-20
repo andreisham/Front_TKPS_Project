@@ -7,6 +7,12 @@ function uploadFile(file,file_input,label,labelVal) {
         return
     }
 
+    if (file.size >= 1000000) {
+        alert('Размер изображения не должен превышать 1 МБ!')
+        file_input.value = '';
+        return
+    }
+
     if (file.name)
         label.querySelector('.input__file-button-text').innerText = file.name;
     else
@@ -33,7 +39,7 @@ function previewImage(element) {
         // открытие увеличенного изображения в новой вкладке
         preview_img.parentElement.onclick = function() {
             var win = window.open();
-            win.document.write('<iframe src="' + event_link  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+            win.document.write('<iframe src="' + event_link  + '" frameborder="0" style="border:0; top:0; left:0; bottom:0; right:0; width:100%; height:100%;" allowfullscreen></iframe>');
         };
 
         reader.readAsDataURL(file[0])
@@ -89,7 +95,7 @@ let i = 0; // инкрементное значение для id файловы
 function createBlock(selectedValue) {
     const div = document.createElement('div')
     div.setAttribute('draggable','true')
-    if (selectedValue == 'description_block_option') { // блок с описанием
+    if (selectedValue === 'description_block_option') { // блок с описанием
         div.setAttribute('class','description_block detail_block')
         div.innerHTML = `<div class="move_icon"></div>
         <textarea data-i="descr-${i}" name="description-${i}" id="" cols="30" rows="2" onkeyup="textAreaAdjust(this)"></textarea> 
@@ -97,7 +103,7 @@ function createBlock(selectedValue) {
         <div class="del_icon" onclick="this.parentElement.remove()"></div>`
         modalDetail.style.display = "none"
         i++
-    } else if (selectedValue == 'image_block_option') { // блок с изображением
+    } else if (selectedValue === 'image_block_option') { // блок с изображением
         div.setAttribute('class','image_block detail_block')
         div.innerHTML = `<div class="move_icon"></div>
           <div class="input__wrapper">
@@ -106,7 +112,7 @@ function createBlock(selectedValue) {
                   <span class="input__file-icon-wrapper"><img class="input__file-icon" src="./img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
                   <span class="input__file-button-text">Выберите файл</span>
               </label>
-              <div class="preview_img_div"><img src="#" class="preview_img"></div>
+              <div class="preview_img_div"><img src="#" class="preview_img" alt=""></div>
               </div>
           <textarea name="image_descr-${i}" data-i="image_descr-${i}" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
           <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">

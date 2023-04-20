@@ -33,8 +33,8 @@
             <header class="release_header">
                 <!-- <div> -->
                     <h1>Релиз R110 + 17.10</h1>
-                    <p>Дата начала 13.03.2023</p>
-                    <p>Дата окончания 20.03.2023</p>
+                    <p id="start_Date">Дата начала 13.03.2023</p>
+                    <p id="end_Date">Дата окончания 20.03.2023</p>
                     <span id="error_span">Здесь будут предупреждения если не заполнены обязательные поля</span>
                 <!-- </div> -->
                 
@@ -43,6 +43,7 @@
                     <input type="button" class="btn" id="primaryReport_btn" value="Создать первичный отчет">
                     <input type="button" class="btn" id="shortReport_btn" value="Создать краткий отчет">
                     <input type="button" class="btn" id="fullReport_btn" value="Создать полный отчет">
+                    <input type="button" class="btn" id="edit_release_btn" value="Редактировать релиз">
                 </div>
             </header>
             <div class="table_name">
@@ -163,7 +164,37 @@
                 <label for="release_scope_input">Область и обьект тестирования
                     <textarea name="release-scope" id="release_scope_input" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
                 </label>
-                <input type="submit" class="btn" value="Добавить проект">
+                <input type="submit" class="btn" value="Добавить релиз">
+            </form>
+        </div>
+    </div>
+    <div id="edit_release_modal">
+        <div id="edit_release_modal_content">
+            <form action="#" method="post" id="release_edit_form" class="form_body">
+                <h3>Новый релиз</h3>
+                <label for="edit_release_num_input">Номер релиза
+                    <input type="text" name="release_number" id="edit_release_num_input" placeholder="R109 + 17.9" required>
+                </label>
+                <label for="edit_release_start_date_input">Дата начала
+                    <input type="date" id="edit_release_start_date_input" required name="release-start-date" required
+                           value="2023-03-21"
+                           min="2020-01-01" max="2099-12-31">
+                </label>
+                <label for="edit_release_end_date_input">Дата окончания
+                    <input type="date" id="edit_release_end_date_input" required name="release-end-date" required
+                           value="2023-03-21"
+                           min="2020-01-01" max="2099-12-31">
+                </label>
+                <label for="edit_release_rds_input">Номер задачи в RDS
+                    <input type="text" name="release-rds" id="edit_release_rds_input" required>
+                </label>
+                <label for="edit_release_prefix_input">Префикс
+                    <input type="text" name="release-vuln-prefix" id="edit_release_prefix_input" value="VTBO-2023-" required>
+                </label>
+                <label for="edit_release_scope_input">Область и обьект тестирования
+                    <textarea name="release-scope" id="edit_release_scope_input" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                </label>
+                <input type="submit" class="btn" value="Редактировать релиз">
             </form>
         </div>
     </div>

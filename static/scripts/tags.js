@@ -40,7 +40,8 @@ function reset() {
 // создание тэгов после нажатия на пробел
 input.addEventListener('keyup', function(e) {
     if (e.key === ' ') {
-        tags.push(input.value.toUpperCase())
+
+        tags.push(input.value.toUpperCase().slice(0,-1))
         addTags()
         input.value = ''
         createLink()
@@ -71,7 +72,7 @@ const linkArea = document.querySelector('#source_links')
 function createLink() {
     tags.forEach(function(tag) {
         if (tag.slice(0, 4) == 'CWE-') {
-            link_ending = tag.slice(4, -1)
+            link_ending = tag.toLowerCase()
             link_ending += '.html'
             links.push('https://cwe.com/' + link_ending)
         } else if (tag.slice(0, 4) == 'MSTG') {

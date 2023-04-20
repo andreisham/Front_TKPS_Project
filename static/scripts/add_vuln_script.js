@@ -40,7 +40,9 @@ function setCritical(result) {
 // =============== отправка формы ===============
 async function handleFormSubmit(event) {
   event.preventDefault()
-
+  if(event.keyCode == 13) {
+    event.preventDefault();
+  }
 
   const data = serializeForm(event.target)
   console.log(data)
@@ -61,7 +63,7 @@ function serializeForm(formNode) {
     .filter((item) => !!item.name)
     .forEach((element) => {
       const { name } = element
-      if (name == 'vuln-classification') {
+      if (name === 'vuln-classification') {
         element.value = tags
       }
       const value = element.value
