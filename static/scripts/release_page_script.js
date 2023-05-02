@@ -40,12 +40,6 @@ btnOpenModal.onclick = function() {
   modal.style.display = "flex";
 }
 
-// Добавляем обработчик события для закрытия модального окна при щелчке вне модального окна
-window.onclick = function(event) {
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-}
 // =============== Модальное окно изменения релиза ===============
 let modal_edit = document.getElementById('edit_release_modal');
 let btnOpenModalEdit = document.getElementById('edit_release_btn');
@@ -59,18 +53,19 @@ btnOpenModalEdit.onclick = function() {
 window.onclick = function(event) {
     if (event.target === modal_edit) {
         modal_edit.style.display = "none";
+    } else if (event.target === modal) {
+        modal.style.display = "none";
     }
 }
 // заполнение полей для редактирвоания релиза
-let releaseName = document.querySelector('.release_header h1')
-let startDate = document.querySelector('#start_Date')
-let endDate = document.querySelector('#end_Date')
+let releaseData = document.querySelector('.release_header')
 
 function fillFields() {
-    applicantEditForm.release_number.value = releaseName.innerHTML
-    // ебатория ниже ругается на неверный формат даты. в правой части приходит в формате dd.mm.yyyy, а ему надо yyyy-mm-dd
-    // applicantEditForm.edit_release_start_date_input.value = startDate.innerHTML.slice(12)
-    // applicantEditForm.edit_release_end_date_input.value = endDate.innerHTML.slice(15)
+    applicantEditForm.release_number.value = releaseData.dataset.number
+    applicantEditForm.edit_release_start_date_input.value = releaseData.dataset.start
+    applicantEditForm.edit_release_end_date_input.value = releaseData.dataset.end
+    applicantEditForm.edit_release_rds_input.value = releaseData.dataset.rds
+    applicantEditForm.edit_release_scope_input.value = releaseData.dataset.scope
 }
 
 
