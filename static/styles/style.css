@@ -992,3 +992,25 @@ details[open] summary:before {
   transition: opacity 1s ease-in-out;
   z-index: -1;
 }
+
+.img_container {
+  width: 1000px;
+  height: 64px;
+}
+
+.arrow_svg {
+  width: 1000px;
+  transform: rotateX(180deg) rotate(350deg);
+}
+.empty_project {
+  margin-top: 70px;
+}
+.empty_project h2{
+  margin-top: 70px;
+  text-align: center;
+  color: #bbcae9;
+}
+.empty_project h1{
+  color: #bbcae9;
+  font-size: 60px;
+}

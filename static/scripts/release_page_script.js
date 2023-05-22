@@ -14,21 +14,30 @@ let primaryReport = document.querySelector('#primaryReport_btn'),
     confirmFix = document.querySelector('#confirmFix_btn')
 
 // обработчики для кнопок
-primaryReport.onclick = function() {
-    console.log(this)
+if (primaryReport) {
+    primaryReport.onclick = function() {
+        console.log(this)
+    }
 }
 
-shortReport.onclick = function() {
-    console.log(this)
+if (shortReport) {
+    shortReport.onclick = function() {
+        console.log(this)
+    }
 }
 
-fullReport.onclick = function() {
-    console.log(this)
+if (fullReport) {
+    fullReport.onclick = function() {
+        console.log(this)
+    }
 }
 
-confirmFix.onclick = function() {
-    console.log(this)
+if (confirmFix) {
+    confirmFix.onclick = function() {
+        console.log(this)
+    }
 }
+
 
 // =============== Модальное окно добавления релиза ===============
 // Получаем ссылки на элементы
@@ -45,10 +54,13 @@ let modal_edit = document.getElementById('edit_release_modal');
 let btnOpenModalEdit = document.getElementById('edit_release_btn');
 
 // Добавляем обработчик события для открытия модального окна
-btnOpenModalEdit.onclick = function() {
-    modal_edit.style.display = "flex";
-    fillFields()
+if (btnOpenModalEdit) {
+    btnOpenModalEdit.onclick = function() {
+        modal_edit.style.display = "flex";
+        fillFields()
+    }
 }
+
 // Добавляем обработчик события для закрытия модального окна при щелчке вне модального окна
 window.onclick = function(event) {
     if (event.target === modal_edit) {
@@ -125,9 +137,13 @@ async function handleFormSubmit(event) {
   const applicantForm = document.getElementById('release_add_form')
   const applicantEditForm = document.getElementById('release_edit_form')
 
-  applicantForm.addEventListener('submit', handleFormSubmit)
-  applicantEditForm.addEventListener('submit', handleFormSubmit)
+if (applicantForm) {
+    applicantForm.addEventListener('submit', handleFormSubmit)
+}
 
+if (applicantEditForm) {
+    applicantEditForm.addEventListener('submit', handleFormSubmit)
+}
 
 function myFunc(vuln) {
     let vuln_id = vuln.innerHTML
