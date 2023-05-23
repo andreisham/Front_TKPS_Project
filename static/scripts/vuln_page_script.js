@@ -82,3 +82,15 @@ function render_cvss_rating() {
     setCriticalVulnPage(cvss_score_p.innerHTML)
     translateCvss(cvss_severity_p)
 }
+
+// false positive
+FalsePositive_btn.onclick = function (){
+    if (vuln_note.value.length > 0) {
+        console.log(vuln_note.value)
+        console.log('можно переводить в ФП')
+        // отправка на сервер инфы
+
+    } else {
+        alert('Нужно указать причину FP в примечания!')
+    }
+}
