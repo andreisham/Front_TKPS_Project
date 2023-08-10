@@ -31,40 +31,40 @@
             <label>Номер в ITSM
                 <input type="text" name="incident-number" id="incident-number">
             </label>
-
+<!--TODO аварии-->
             <div class="btns_wrapper">
-                <input type="button" class="btn" id="vulnPDF_btn" value="Создать pdf карточки уязвимости">
-                <input type="button" class="btn" id="vulnPDFfromMD_btn" value="Создать pdf карточки уязвимости из md">
-                <input type="button" class="btn cvss-button" id="editCVSS_btn" value="Пересчитать критичность">
+<!--                {% csrf_token %}-->
+                <input type="button" onclick="report('/api/vuln/report?id=1')" class="btn" id="vulnPDF_btn" value="Создать pdf карточки уязвимости"/>
+                <input type="button" class="btn cvss-button" id="editCVSS_btn" value="Пересчитать критичность" onmouseup="editSeverity()">
                 <input type="button" class="btn" id="FalsePositive_btn" title="Перевести уязвимость в статус False positive" value="False positive">
-                <input type="button" class="btn" id="delVuln_btn" title="Удалить уязвимость">
-                <a href="#" onclick="history.back(); return false;" class="btn" id="add_vuln_btn">Назад</a>
+                <input type="button" class="btn" id="delVuln_btn" title="Удалить уязвимость" onclick="deleteVuln()">
+                <a href="#" onclick='history.back()' class="btn" id="add_vuln_btn">Назад</a>
             </div>
         </header>
     <div class="vuln_info">
         <div class="vuln_row">
             <label>Подробное описание
-                <textarea name="vuln-description" cols="30" rows="2" required onkeyup="textAreaAdjust(this)">Возможность сделать SQLi</textarea>
+                <textarea name="vuln-description" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)">Возможность сделать SQLi</textarea>
             </label>
         </div>
         <div class="vuln_row">
             <label>Последствия эксплуатации
-                <textarea name="vuln-consequences" cols="30" rows="2" required onkeyup="textAreaAdjust(this)">будет не очень</textarea>
+                <textarea name="vuln-consequences" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)">будет не очень</textarea>
             </label>
         </div>
         <div class="vuln_row">
             <label>Точка входа
-                <textarea name="vuln-endpoints" cols="30" rows="2" required onkeyup="textAreaAdjust(this)">https://somwhere.com</textarea>
+                <textarea name="vuln-endpoints" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)">https://somwhere.com</textarea>
             </label>
         </div>
         <div class="vuln_row">
             <label>Рекомендации по устранению
-                <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)">Лучше устранить</textarea>
+                <textarea name="vuln-recommendation" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)">Лучше устранить</textarea>
             </label>
         </div>
         <div class="vuln_row discovery">
             <label> Где выявлено
-                <select name="vuln-channel-application">
+                <select name="vuln-channel-application" onchange="editVuln(this.name, this.value)">
                     <option value="1" selected>Mobile Android</option>
                     <option value="2">Mobile iOS</option>
                     <option value="3">Web</option>
@@ -76,12 +76,13 @@
             <label>Дата выявления
                 <input type="date" id="start" required name="vuln-date-of-discovery"
                        value="2023-03-21"
-                       min="2020-01-01" max="2099-12-31">
+                       min="2020-01-01" max="2099-12-31"
+                       onchange="editVuln(this.name, this.value)">
             </label>
         </div>
         <div class="vuln_row tags_container">
-            <label>Классификация уязвимости (CWE, MASSVS)
-                <div class="tag_container">
+            <label>Классификация уязвимости (CWE, MASVS)
+                <div class="tag_container" onchange="editClassVuln(this)">
                     <div class="tag"><span>CWE-123 </span><closebtn class="close-icon" data-item="CWE-123 "></closebtn></div>
                     <div class="tag"><span>CWE-31 </span><closebtn class="close-icon" data-item="CWE-31 "></closebtn></div>
                     <input name="vuln-classification" type="text" data-role="taginput">
@@ -90,14 +91,14 @@
         </div>
         <div class="vuln_row tags_container">
             <label>Ссылка на источники
-                <textarea name="class-link" id="source_links" cols="30" rows="2" required ></textarea>
+                <textarea name="class-link" id="source_links" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" disabled></textarea>
             </label>
         </div>
     </div>
         <div class="details_div">
             <details>
                 <summary>Свидетельства обнаружения</summary>
-                <form method="post" action="">
+                <form id="form-edit-vuln" method="post" action="" data-steps="1">
                     <div class="row vulns-detail">
                         <input type="button" class="btn add_btn" value="Добавить блок" onclick="openModalAddBlock()">
                         <div class="description_block detail_block" draggable="true">
@@ -135,7 +136,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="submit" value="Обновить свидетельства" class="btn">
+                    <input type="button" onclick="handleFormSubmit(this)" value="Обновить свидетельства" class="btn">
                 </form>
             </details>
             <details>
@@ -143,27 +144,27 @@
                 <div class="details_content">
                     <div class="row">
                         <label>Результат решения по работам
-                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                            <textarea name="vuln-work-result" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
                         </label>
                         <label>Ссылка на RDS/инцидент
-                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                            <textarea name="vuln-link-to-rds" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
                         </label>
                     </div>
                     <div class="row">
                         <label>Стрим ответственный за устранение
-                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                            <textarea name="vuln-resp-stream" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
                         </label>
                         <label>Срок устранения
-                            <input type="date" required name="vuln-date-of-discovery"
-                                   min="2020-01-01" max="2099-12-31">
+                            <input type="date" required name="vuln-term-fix"
+                                   min="2020-01-01" max="2099-12-31" onchange="editVuln(this.name, this.value)">
                         </label>
                     </div>
                     <div class="row">
                         <label>ФИО ответственного
-                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                            <textarea name="vuln-resp-name" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
                         </label>
                         <label>Источник информациии
-                            <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                            <textarea name="vuln-source" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
                         </label>
                     </div>
                 </div>
@@ -171,7 +172,7 @@
         </div>
         <div class="vuln_note">
             <label>Примечания
-                <textarea name="vuln-note" id="vuln_note" cols="30" rows="2" ></textarea>
+                <textarea name="vuln-note" id="vuln_note" cols="30" rows="2" onchange="editVuln(this.name, this.value)"></textarea>
             </label>
         </div>
     </div>
@@ -494,6 +495,7 @@
     <script src="scripts/tags.js"></script>
     <script src="scripts/modalCVSS.js"></script>
     <script src="scripts/vuln_details.js"></script>
+    <script src="scripts/confirm_modal_script.js"></script>
     <script type="text/javascript" async="async" src="cvss_calculator/scripts/cvsscalc31.js"></script>
     <script type="text/javascript" async="async" src="cvss_calculator/scripts/cvsscalc31_helptext.js"></script>
     <script type="text/javascript" async="async" src="cvss_calculator/scripts/web.js"></script>

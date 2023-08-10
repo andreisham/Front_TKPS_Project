@@ -91,7 +91,11 @@ function openModalAddBlock() {
 
 
 // создание блока
+let vulnData = document.querySelector('#form-edit-vuln')
 let i = 0; // инкрементное значение для id файловых импутов
+if (vulnData != null) {
+    i = Number(vulnData.dataset.steps) + 1
+}
 function createBlock(selectedValue) {
     const div = document.createElement('div')
     div.setAttribute('draggable','true')
@@ -106,17 +110,17 @@ function createBlock(selectedValue) {
     } else if (selectedValue === 'image_block_option') { // блок с изображением
         div.setAttribute('class','image_block detail_block')
         div.innerHTML = `<div class="move_icon"></div>
-          <div class="input__wrapper">
-              <input name="file-${i}" type="file" data-i="file_input-${i}" required accept=".jpg, .png, .gif" id="input__file-${i}" class="input input__file">
-              <label for="input__file-${i}" class="input__file-button btn">
-                  <span class="input__file-icon-wrapper"><img class="input__file-icon" src="./img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
-                  <span class="input__file-button-text">Выберите файл</span>
-              </label>
-              <div class="preview_img_div"><img src="#" class="preview_img" alt=""></div>
-              </div>
-          <textarea name="image_descr-${i}" data-i="image_descr-${i}" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
-          <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">
-          <div class="del_icon" onclick="this.parentElement.remove()"></div>`
+      <div class="input__wrapper">
+          <input name="file-${i}" type="file" data-i="file_input-${i}" required accept=".jpg, .png, .gif" id="input__file-${i}" class="input input__file">
+          <label for="input__file-${i}" class="input__file-button btn">
+              <span class="input__file-icon-wrapper"><img class="input__file-icon" src="/static/img/iconfinder_download_down_save_8666778.svg" alt="Выбрать файл" width="25"></span>
+              <span class="input__file-button-text">Выберите файл</span>
+          </label>
+          <div class="preview_img_div"><img src="#" class="preview_img"></div>
+          </div>
+      <textarea name="image_descr-${i}" data-i="image_descr-${i}" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+      <input type="button" class="btn" value="Добавить блок" onclick="openModalAddBlock()">
+      <div class="del_icon" onclick="this.parentElement.remove()"></div>`
         modalDetail.style.display = "none"
         i++
         div.querySelector('input[type="file"]').addEventListener('change', function (e) {

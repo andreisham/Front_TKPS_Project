@@ -27,6 +27,13 @@ form {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   border: 1px solid #D8E3FE;
   margin: 0 auto 30px;
+
+  opacity: 0;
+  transform: scale(0.75);
+  animation-name: confirm__window---open;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s;
 }
 .cvss_form {
     display: grid; 
@@ -260,7 +267,7 @@ input[type="date"] {
   cursor: move;
 }
 
-.move_icon, .del_icon {
+.move_icon, .del_icon, .rev_icon {
   height: 50px;
   background-position: center;
   background-repeat: no-repeat;
@@ -273,6 +280,7 @@ input[type="date"] {
   grid-area: del_icon;
   cursor: pointer;
 }
+
 
 .description_block textarea {
   grid-area: textarea;
@@ -430,7 +438,7 @@ h3 {
 }
 
 .tag_container {
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
   display: flex;
@@ -1014,3 +1022,225 @@ details[open] summary:before {
   color: #bbcae9;
   font-size: 60px;
 }
+
+/*Окно подтверждения*/
+.confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  box-sizing: border-box;
+
+  opacity: 0;
+  animation-name: confirm---open;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirm--close {
+  animation-name: confirm---close;
+}
+
+.confirm__window {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+  opacity: 0;
+  transform: scale(0.75);
+  animation-name: confirm__window---open;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s;
+}
+
+.confirm__titlebar,
+.confirm__content,
+.confirm__buttons {
+  padding: 1.25em;
+}
+
+.confirm__titlebar {
+  background: #D2E1FF;
+  color: #3A79FF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.confirm__title {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.confirm__close {
+  background: none;
+  outline: none;
+  border: none;
+  transform: scale(2.5);
+  color: #3A79FF;
+  transition: color 0.15s;
+}
+
+.confirm__close:hover {
+  color: #ff0000;
+  cursor: pointer;
+}
+
+.confirm__content {
+  line-height: 1.8em;
+}
+
+.confirm__buttons {
+  background: #F4F7FF;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.confirm__button {
+  padding: 0.4em 0.8em;
+  border: 2px solid #FFD7D7;
+  border-radius: 5px;
+  background: #FFD7D7;
+  color: #D43F3F;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-left: 0.6em;
+  cursor: pointer;
+  outline: none;
+}
+
+.confirm__button--fill {
+  border: 2px solid #4D6CE1;
+  background: #4D6CE1;
+  color: #ffffff;
+}
+
+.confirm__button:focus {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.history_wrapper {
+  padding: 0 calc(50% - 680px);
+}
+
+.form_radio_group {
+  display: inline-block;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.form_radio_group-item {
+  display: inline-block;
+  float: left;
+}
+.form_radio_group input[type=radio] {
+  display: none;
+}
+.form_radio_group label {
+  user-select: none;
+}
+
+.form_radio_group .form_radio_group-item:first-child label {
+  border-radius: 6px 0 0 6px;
+}
+.form_radio_group .form_radio_group-item:last-child label {
+  border-radius: 0 6px 6px 0;
+}
+
+/* Checked */
+.form_radio_group input[type=radio]:checked + label {
+  background: #3A79FF;
+  color: #D2E1FF;
+}
+
+/* Disabled */
+.form_radio_group input[type=radio]:disabled + label {
+  background: #efefef;
+  color: #666;
+}
+
+.history_header {
+  margin-bottom: 40px;
+  background-color: #fff;
+}
+
+.history_header h1 {
+  text-align: left;
+}
+
+.history_table {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.rev_icon {
+  background-image: url('../img/iconfinder_revert_9041916.svg');
+  grid-area: rev_icon;
+  cursor: pointer;
+}
+
+.custom-select {
+  position: relative;
+  width: 200px;
+}
+
+.select-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.select-dropdown {
+  position: absolute;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: none;
+  width: 200px;
+}
+
+.select-dropdown.visible {
+  display: block;
+}
+
+.select-option {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.select-option:hover {
+  background-color: #f0f0f0;
+}
+
+#filter_history {
+  width: 200px;
+}
+
+@keyframes confirm---open {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes confirm---close {
+  from { opacity: 1 }
+  to { opacity: 0 }
+}
+
+@keyframes confirm__window---open {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

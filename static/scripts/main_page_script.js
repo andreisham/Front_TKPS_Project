@@ -27,15 +27,19 @@ let add_btn = document.querySelector('.btn')
 add_btn.onclick = function() {
     let project_name = document.querySelector('#project_name_input').value
     let project_prefix = document.querySelector('#project_prefix_input').value
-    if (project_name === "" || project_prefix === "") {
+    let csrf_token = document.querySelector('input').value
+    if (project_name === "") {
         alert("Пожалуйста, введите название проекта.");
         return;
+    } else if (project_prefix === "") {
+        alert("Пожалуйста, введите префикс проекта.");
+        return;
     }
-    createBlock(project_name,project_prefix)
+    createBlock(project_name,project_prefix,csrf_token)
 }
 
 // создание и добавление блока прокета
-function createBlock(project_name,project_prefix) {
+function createBlock(project_name,project_prefix,csrf_token) {
     const div = document.createElement('div')
     div.setAttribute('class','project_block')
     div.setAttribute('onclick','location.href="#"')
@@ -50,12 +54,12 @@ function createBlock(project_name,project_prefix) {
     i++
 
     project_blocks.insertBefore(div, btnOpenModal)
-
-    const formdata = new FormData()
-
-    formdata.append(project_name,project_prefix)
-    console.log(formdata)
-    sendProjectInfo(formdata)
+    const data = new FormData()
+    data.append('csrfmiddlewaretoken', csrf_token)
+    data.append('project_name', project_name)
+    data.append('project_prefix', project_prefix)
+    console.log(data)
+    sendProjectInfo(data)
 }
 
 // async function handleFormSubmit(event) {
@@ -68,14 +72,12 @@ function createBlock(project_name,project_prefix) {
 // }
 
 async function sendProjectInfo(data) {
-    return await fetch('/api/qwe', {
+    return await fetch('/api/project', {
         method: 'POST',
         body: data,
     }).then(response => {
         if (response.ok) {
-            //response.json()
             location.reload()
-
         }
     }).catch(error => {
         alert('Ошибка отправки' + error)

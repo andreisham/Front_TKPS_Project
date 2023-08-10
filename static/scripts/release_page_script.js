@@ -1,10 +1,26 @@
 // =============== страница релиза ===============
 
 // удаление уязвимости
-function deleteVuln(rowToDel) {
-    let vuln_id = rowToDel.cells[0].innerHTML
-    console.log('deleted vuln with id: ' + vuln_id)
-    rowToDel.remove()
+async function deleteVuln(rowToDel) {
+    Confirm.open({
+        title: 'Подтверждение действия',
+        message: 'Вы точно хотите удалить уязвимость?',
+        onok: () => {
+            let vuln_id = rowToDel.cells[0].innerHTML
+            rowToDel.remove()
+            const data = new FormData()
+            data.append('csrfmiddlewaretoken', document.querySelector('input[name*="csrf"]').value);
+            data.append('release', document.querySelector('input#release').value);
+            data.append('vuln', rowToDel.querySelector('td.table_item_link').id)
+            if (rowToDel.querySelector('td.table_item_status select') != null) {
+                data.append('status', rowToDel.querySelector('td.table_item_status select').value)
+            } else {
+                data.append('status', rowToDel.querySelector('td.table_item_status').innerHTML)
+            }
+            // убрал await
+            const response = sendData(data, '/api/vuln/delete');
+        }
+    })
 }
 
 // получение кнопок
@@ -33,11 +49,30 @@ if (fullReport) {
 }
 
 if (confirmFix) {
-    confirmFix.onclick = function() {
-        console.log(this)
+    confirmFix.onclick = async function() {
+        Confirm.open({
+            title: 'Подтверждение действия',
+            message: 'Фиксируем устранение?',
+            onok: () => {
+                old_vulns = document.querySelectorAll('.table.old_vuln tbody tr');
+                const data = new FormData()
+                data.append('csrfmiddlewaretoken', document.querySelector('input[name*="csrf"]').value);
+                data.append('release', document.querySelector('input#release').value);
+                Array.from(old_vulns)
+                    .forEach((element) => {
+                        const id = element.querySelector('td.table_item_link').id;
+                        if (element.querySelector('select') != null) {
+                            data.append(id, element.querySelector('select').value);
+                        } else {
+                            data.append(id, element.querySelector('.table_item_status').innerText);
+                        }
+                    })
+                // убрал await
+                const response = sendData(data, '/api/release/fix');
+            }
+        })
     }
 }
-
 
 // =============== Модальное окно добавления релиза ===============
 // Получаем ссылки на элементы
@@ -69,17 +104,18 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
 // заполнение полей для редактирвоания релиза
 let releaseData = document.querySelector('.release_header')
 
 function fillFields() {
+    applicantEditForm.release_id.value = releaseData.dataset.id
     applicantEditForm.release_number.value = releaseData.dataset.number
     applicantEditForm.edit_release_start_date_input.value = releaseData.dataset.start
     applicantEditForm.edit_release_end_date_input.value = releaseData.dataset.end
     applicantEditForm.edit_release_rds_input.value = releaseData.dataset.rds
     applicantEditForm.edit_release_scope_input.value = releaseData.dataset.scope
 }
-
 
 // // ресайз textarea в зависимости от контента
 function textAreaAdjust(element) {
@@ -96,7 +132,8 @@ async function handleFormSubmit(event) {
     console.log(data)
     applicantForm.classList.add('_sending')
     
-    const response = await sendData(data)
+    const response = await sendData(data, '/api/release')
+    location.reload()
   }
   
   // сбор данных с формы
@@ -118,21 +155,22 @@ async function handleFormSubmit(event) {
     return data
   }
   
-  // отправка данных
-  async function sendData(data) {
-    return await fetch('/', {
-      method: 'POST',
-      body: data,
-    }).then(response => {
-      if (response.ok) {
-          applicantForm.reset()
-          applicantForm.classList.remove('_sending')
-      }
-    }).catch(error => {
-      alert('Ошибка отправки' + error)
-        applicantForm.classList.remove('_sending')
-    });
+// отправка данных
+async function sendData(data, url) {
+return await fetch(url, {
+  method: 'POST',
+  body: data,
+}).then(response => {
+  if (response.ok) {
+      alert('Отправлено успешно')
+      applicantForm.reset()
+      applicantForm.classList.remove('_sending')
   }
+}).catch(error => {
+  alert('Ошибка отправки' + error)
+    applicantForm.classList.remove('_sending')
+});
+}
   
   const applicantForm = document.getElementById('release_add_form')
   const applicantEditForm = document.getElementById('release_edit_form')
@@ -145,9 +183,26 @@ if (applicantEditForm) {
     applicantEditForm.addEventListener('submit', handleFormSubmit)
 }
 
-function myFunc(vuln) {
-    let vuln_id = vuln.innerHTML
-    console.log(vuln_id)
-    console.log(vuln)
-    window.location.href = "/api/qwe"
+function info(vuln) {
+    window.location.href = `/vuln/info?id=${vuln.id}`
 }
+
+// =============== Карточка релиза ===============
+async function report(url) {
+  console.log(url)
+  let response = await fetch(url).then((response) => {
+    return response.text()
+  }).catch(error => {
+    alert('Ошибка отправки' + error)
+  })
+  let report = window.open();
+  report.document.open();
+  report.document.write(response);
+  report.document.close();
+}
+
+// Подсвечивание отображаемого релиза в сайдбаре
+let url = new URL(document.location.href)
+let showedReleaseId = url.searchParams.get('id')
+let menu_item = document.querySelector(`[data-release_id="${showedReleaseId}"]`)
+menu_item.firstChild.setAttribute('style', 'color: #5E81FE;')

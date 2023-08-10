@@ -11,15 +11,20 @@
 <body>
     <div class="menu_wrapper top_menu_wrapper">
         <ol class="menu">
-            <li class="menu_item" title="Текущий проект"><a href="main_page.html">ВТБ Онлайн</a></li>
-            <li class="menu_item" title="Страница релизов"><a href="release_page.html">Релизы</a></li>
-            <li class="logo menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
+            <li class="menu_item" title="Страница проектов"><a href="main_page.html">ВТБ Онлайн</a></li>
+            <li class="menu_item" title="Страница релизов текущего проекта"><a href="release_page.html">Релизы</a></li>
+            <li class="menu_item" title="Страница истории текущего проекта"><a href="history_page.html">История</a></li>
+            <li class="menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
             <li class="menu_item" title="Все когда либо найденные уязвимости"><a href="#">БД уязвимостей</a></li>
+            <li class="menu_item" title="Руководства пользователя"><a href="#">FAQ</a></li>
             <li class="menu_item" title="Отчеты, графики, дашборды"><a href="#">Отчеты</a></li>
         </ol>
     </div>
     <h1>Добавление уязвимости</h1>
     <form action="#" method="post" id="vuln_add_form" class="form_body">
+        <input type="hidden" name="csrf" value="123">
+        <input type="hidden" name="project-id" value="{{ project.id }}">
+        <input type="hidden" name="release-id" value="{{ release }}">
         <div class="row">
             <label>Наименование
                 <input type="text" name="vuln-fullname" required>
@@ -64,7 +69,7 @@
         </div>
         <div class="row">
             <label>Ссылка на источники
-                <textarea name="class-link" id="source_links" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                <textarea name="class-link" id="source_links" cols="30" rows="2" required onkeyup="textAreaAdjust(this)" disabled></textarea>
             </label>
         </div>
         <div class="row calc-cvss">
@@ -77,7 +82,7 @@
         </div>
         <div class="row">
             <label>Рекомендации по устранению
-                <textarea name="vuln-recommendation" id="" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
+                <textarea name="vuln-recommendation" cols="30" rows="2" required onkeyup="textAreaAdjust(this)"></textarea>
             </label>
         </div>
         <div class="row vulns-detail">
@@ -89,14 +94,15 @@
                     <label> Выберите тип блока
                         <select>
                             <option value="description_block_option" selected>Описание</option>
-                            <option value="image_block_option">Изображение с подпиьсю</option>
+                            <option value="image_block_option">Изображение с подписью</option>
                         </select>
                     <input type="button" class="btn" value="Добавить блок" onclick="addBlock(this.previousElementSibling)">
                     </label>
                 </div>
             </div>
         </div>
-        <input type="submit" value="Добавить уязвимость" class="btn" >
+        <input type="submit" value="Добавить уязвимость" class="btn">
+        <input type="button" onclick='preview()' value="Предпросмотр" class="btn">
     </form>
     <div id="cvss-modal" class="my_calcv modal">
         <section class="my_calcv modal_content">

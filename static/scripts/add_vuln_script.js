@@ -47,8 +47,8 @@ async function handleFormSubmit(event) {
   const data = serializeForm(event.target)
   console.log(data)
   applicantForm.classList.add('_sending')
-  
-  const response = await sendData(data)
+
+  const response = await sendData(data, '/api/vuln/')
 }
 
 // сбор данных с формы
@@ -82,15 +82,22 @@ function serializeForm(formNode) {
 }
 
 // отправка данных
-async function sendData(data) {
-  return await fetch('/api/apply/', {
+async function sendData(data, url) {
+  return await fetch(url, {
     method: 'POST',
     body: data,
   }).then(response => {
     if (response.ok) {
-      applicantForm.reset()
-      applicantForm.classList.remove('_sending')
-      location.href = "http://127.0.0.1:5500/release?id=1"
+        applicantForm.classList.remove('_sending')
+      alert('Отправлено успешно')
+      if (url == '/api/vuln/preview') {
+        return response.text()
+      } else {
+        applicantForm.reset()
+        const projectId = document.querySelector('input[name="project-id"]').value
+        const releaseId = document.querySelector('input[name="release-id"]').value
+        //location.href = `http://127.0.0.1:8000/release?id=${projectId}&rel=${releaseId}`
+      }
     }
   }).catch(error => {
     alert('Ошибка отправки' + error)
@@ -100,3 +107,53 @@ async function sendData(data) {
 
 const applicantForm = document.getElementById('vuln_add_form')
 applicantForm.addEventListener('submit', handleFormSubmit)
+
+// =============== Предпросмотр ===============
+async function preview() {
+  const data = serializeFormPreview(document.querySelector('form'))
+  applicantForm.classList.add('_sending')
+  let response = await sendData(data, '/api/vuln/preview')
+  let report = window.open();
+  report.document.open();
+  report.document.write(response);
+  report.document.close();
+}
+
+// сбор данных с формы
+function serializeFormPreview(formNode) {
+
+  const { elements } = formNode
+
+  const data = new FormData()
+  const fileUploadBlocks = document.querySelectorAll('.image_block');
+
+  Array.from(elements)
+    .filter((item) => !!item.name)
+    .forEach((element) => {
+      const { name } = element
+      if (name === 'vuln-classification') {
+        element.value = tags
+      }
+      const value = element.value
+      data.append(name, value)
+    })
+
+  fileUploadBlocks.forEach(block => {
+    const fileInput = block.querySelector('input[type="file"]');
+    const fileBase64 = block.querySelector('.preview_img_div img').src;
+    const fileDesc = block.querySelector('textarea');
+
+    data.append(fileInput.name, fileBase64);
+    data.append(fileDesc.name, fileDesc.value);
+  });
+  input.value = ''
+  return data
+}
+
+// Уведомление при покидании страницы
+window.onunload = function() {
+  return confirm('Вы хотите покинуть страницу?')
+}
+window.onbeforeunload = function(){
+  return confirm('Точно хотите выйти?');
+}

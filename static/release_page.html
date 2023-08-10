@@ -12,40 +12,40 @@
     <div class="menu_wrapper left_menu_wrapper">
         <ol class="menu left_menu">
             <li class="menu_item"><input type="button" class="btn" id="add_release_btn" value="Добавить релиз"></li>
-            <li class="menu_item"><a href="">R110 + 17.10</a></li>
-            <li class="menu_item"><a href="">R109 + 17.9</a></li>
-            <li class="menu_item"><a href="">R108 + 17.8</a></li>
+            <li class="menu_item" data-release_id="3"><a href="/?id=3">R110 + 17.10</a></li>
+            <li class="menu_item" data-release_id="2"><a href="/?id=2">R109 + 17.9</a></li>
+            <li class="menu_item" data-release_id="1"><a href="/?id=1">R108 + 17.8</a></li>
         </ol>
     </div>
 
     <div class="release_wrapper">
         <div class="menu_wrapper top_menu_wrapper">
             <ol class="menu">
-                <li class="menu_item" title="Текущий проект"><a href="main_page.html">ВТБ Онлайн</a></li>
-                <li class="menu_item" title="Страница релизов"><a href="release_page.html">Релизы</a></li>
+                <li class="menu_item" title="Страница проектов"><a href="main_page.html">ВТБ Онлайн</a></li>
+                <li class="menu_item" title="Страница релизов текущего проекта"><a href="release_page.html">Релизы</a></li>
+                <li class="menu_item" title="Страница истории текущего проекта"><a href="history_page.html">История</a></li>
                 <li class="menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
-
                 <li class="menu_item" title="Все когда либо найденные уязвимости"><a href="#">БД уязвимостей</a></li>
+                <li class="menu_item" title="Руководства пользователя"><a href="#">FAQ</a></li>
                 <li class="menu_item" title="Отчеты, графики, дашборды"><a href="#">Отчеты</a></li>
             </ol>
         </div>
         <div class="table_wrapper">
             <header class="release_header" data-number="R113+17.13" data-start="2023-04-26" data-end="2023-05-26" data-rds="412421" data-scope="4214214">
-                <!-- <div> -->
                     <h1>Релиз R110 + 17.10</h1>
                     <p id="start_Date">Дата начала 13.03.2023</p>
                     <p id="end_Date">Дата окончания 20.03.2023</p>
                     <span id="error_span">Здесь будут предупреждения если не заполнены обязательные поля</span>
-                <!-- </div> -->
                 
                 <div class="btns_wrapper">
                     <a href="add_vuln.html" class="btn" id="add_vuln_btn">Добавить уязвимость</a>
                     <input type="button" class="btn" id="primaryReport_btn" value="Создать первичный отчет">
                     <input type="button" class="btn" id="shortReport_btn" value="Создать краткий отчет">
-                    <input type="button" class="btn" id="fullReport_btn" value="Создать полный отчет">
+                    <input type="button" onclick="report('/api/release/full?id=1')" class="btn" id="fullReport_btn" value="Создать полный отчет" />
                     <input type="button" class="btn" id="edit_release_btn" value="Редактировать релиз">
                 </div>
             </header>
+            <input type="hidden" id="release" value="{{cur_release.id}}"/>
             <div class="table_name">
                 <h3>Новые уязвимости</h3>
             </div>
@@ -64,7 +64,7 @@
                 </thead>
                 <tbody>
                     <tr class="table_row">
-                        <td class="table_item table_item_link" onclick="myFunc(this)">VTBO-2023-2</td>
+                        <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-2</td>
                         <td class="table_item">SQLi</td>
                         <td class="table_item">Возможность сделать SQLi</td>
                         <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
@@ -74,7 +74,7 @@
                         <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
                     </tr>
                     <tr class="table_row">
-                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-22023-2</td>
+                        <td class="table_item table_item_link" onclick="info(this)">VTBO-22023-2</td>
                         <td class="table_item">SQLi</td>
                         <td class="table_item">Возможность сделать SQLi</td>
                         <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
@@ -84,7 +84,7 @@
                         <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
                     </tr>
                     <tr class="table_row">
-                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-20123-2</td>
+                        <td class="table_item table_item_link" onclick="info(this)">VTBO-20123-2</td>
                         <td class="table_item">SQLi</td>
                         <td class="table_item">Возможность сделать SQLi</td>
                         <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
@@ -113,7 +113,7 @@
                 </thead>
                 <tbody>
                     <tr class="table_row">
-                        <td class="table_item table_item_link" onclick="console.log(`move to vuln_page ${this.innerHTML}`)">VTBO-2023-1</td>
+                        <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-1</td>
                         <td class="table_item">XSS</td>
                         <td class="table_item">Возможность сделать XSS</td>
                         <td class="table_item table_item_cvss">8.0 Высокая</td>
@@ -142,16 +142,18 @@
         <div id="add_release_modal_content">
             <form action="#" method="post" id="release_add_form" class="form_body">
                 <h3>Новый релиз</h3>
+<!--                {% csrf_token %}-->
+                <input type="hidden" name="project_id" value="{{ id }}" required>
                 <label for="release_num_input">Номер релиза
                     <input type="text" name="release_number" id="release_num_input" placeholder="R109 + 17.9" required>
                 </label>
                 <label for="release_start_date_input">Дата начала
-                    <input type="date" id="release_start_date_input" required name="release-start-date" required
+                    <input type="date" id="release_start_date_input" name="release-start-date" required
                     value="2023-03-21"
                     min="2020-01-01" max="2099-12-31">
                 </label>
                 <label for="release_end_date_input">Дата окончания
-                    <input type="date" id="release_end_date_input" required name="release-end-date" required
+                    <input type="date" id="release_end_date_input" name="release-end-date" required
                     value="2023-03-21"
                     min="2020-01-01" max="2099-12-31">
                 </label>
@@ -172,16 +174,19 @@
         <div id="edit_release_modal_content">
             <form action="#" method="post" id="release_edit_form" class="form_body">
                 <h3>Новый релиз</h3>
+<!--                {% csrf_token %}-->
+                <input type="hidden" name="csrf" value="123">
+                <input type="hidden" name="release_id" required>
                 <label for="edit_release_num_input">Номер релиза
                     <input type="text" name="release_number" id="edit_release_num_input" placeholder="R109 + 17.9" required>
                 </label>
                 <label for="edit_release_start_date_input">Дата начала
-                    <input type="date" id="edit_release_start_date_input" required name="release-start-date" required
+                    <input type="date" id="edit_release_start_date_input" required name="release-start-date"
                            value="2023-03-21"
                            min="2020-01-01" max="2099-12-31">
                 </label>
                 <label for="edit_release_end_date_input">Дата окончания
-                    <input type="date" id="edit_release_end_date_input" required name="release-end-date" required
+                    <input type="date" id="edit_release_end_date_input" required name="release-end-date"
                            value="2023-03-21"
                            min="2020-01-01" max="2099-12-31">
                 </label>
@@ -195,6 +200,7 @@
             </form>
         </div>
     </div>
+    <script src="scripts/confirm_modal_script.js"></script>
     <script src="scripts/release_page_script.js"></script>
 </body>
 </html>

@@ -40,12 +40,11 @@ function reset() {
 // создание тэгов после нажатия на пробел
 input.addEventListener('keyup', function(e) {
     if (e.key === ' ') {
-
-        tags.push(input.value.toUpperCase().slice(0,-1))
+        tags.push(input.value.toUpperCase())
         addTags()
         input.value = ''
         createLink()
-        console.log(tags)
+        sendDataTags(tags, '/api/vuln/edit')
     }
 })
 
@@ -61,18 +60,38 @@ document.addEventListener('click', function(e) {
         }
         addTags();
         addLink()
+        sendDataTags(tags, '/api/vuln/edit')
     }
 })
+
+// Отсылка тегов при изменении
+async function sendDataTags(tags, url) {
+    let data = new FormData()
+    console.log(tags)
+    data.append('csrfmiddlewaretoken', document.querySelector("[name='csrfmiddlewaretoken']").value)
+    data.append('vuln', document.querySelector('header').dataset.vulnId)
+    data.append('class', tags)
+    data.append('class-link', document.querySelector("[name='class-link']").value)
+    return await fetch(url, {
+      method: 'POST',
+      body: data,
+    }).then(response => {
+          if (response.ok) {
+          }
+    }).catch(error => {
+          alert('Ошибка отправки' + error)
+    });
+}
 
 // создание ссылок на основе тэгов
 let link_ending;
 let links = []
 const linkArea = document.querySelector('#source_links')
-
+// TODO Ссылка будет приходить с бека
 function createLink() {
     tags.forEach(function(tag) {
         if (tag.slice(0, 4) == 'CWE-') {
-            link_ending = tag.toLowerCase()
+            link_ending = tag.slice(4, -1)
             link_ending += '.html'
             links.push('https://cwe.com/' + link_ending)
         } else if (tag.slice(0, 4) == 'MSTG') {

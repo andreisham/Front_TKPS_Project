@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>История</title>
+</head>
+<body>
+<div class="history_wrapper">
+  <div class="menu_wrapper top_menu_wrapper">
+    <ol class="menu">
+      <li class="menu_item" title="Страница проектов"><a href="main_page.html">ВТБ Онлайн</a></li>
+      <li class="menu_item" title="Страница релизов текущего проекта"><a href="release_page.html">Релизы</a></li>
+      <li class="menu_item" title="Страница истории текущего проекта"><a href="history_page.html">История</a></li>
+      <li class="menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
+      <li class="menu_item" title="Все когда либо найденные уязвимости"><a href="#">БД уязвимостей</a></li>
+      <li class="menu_item" title="Руководства пользователя"><a href="#">FAQ</a></li>
+      <li class="menu_item" title="Отчеты, графики, дашборды"><a href="#">Отчеты</a></li>
+    </ol>
+  </div>
+  <div class="table_wrapper">
+    <header class="history_header">
+      <h1>История</h1>
+      <p>Что ищем?</p>
+<!--      todo запрос айдишников после клика на кнопку-->
+      <div class="form_radio_group">
+        <div class="form_radio_group-item">
+          <input id="release_radio" type="radio" name="history_radio" value="release" checked>
+          <label class="btn" for="release_radio">Релиз</label>
+        </div>
+        <div class="form_radio_group-item">
+          <input id="vuln_radio" type="radio" name="history_radio" value="vuln">
+          <label class="btn" for="vuln_radio">Уязвимость</label>
+        </div>
+      </div>
+      <!--      todo запрос истории после выбора айдишника-->
+      <div class="custom-select">
+        <label for="select-id">Введите id</label>
+        <input type="text" id="select-id" class="select-input" placeholder="Выберите опцию...">
+        <div class="select-dropdown"></div>
+      </div>
+    </header>
+    <p>Показать изменения по полю:</p>
+    <select id="filter_history">
+      <option value="name" selected>Название</option>
+      <option value="descr">Описание</option>
+      <option value="cvss">Критичность</option>
+    </select>
+    <table class="table history_table">
+      <thead>
+      <tr class="table_header table_row">
+        <th class="table_item">Измененное поле</th>
+        <th class="table_item">Новое значение</th>
+        <th class="table_item">Предыдущее значение</th>
+        <th class="table_item">Кем изменено</th>
+        <th class="table_item">Когда изменено</th>
+        <th class="table_item">Сделать откат</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="table_row" data-id="1">
+        <td class="table_item">Описание</td>
+        <td class="table_item">у вас SQLi</td>
+        <td class="table_item">Возможность сделать SQLi</td>
+        <td class="table_item">-</td>
+        <td class="table_item">17.03.2023</td>
+        <td class="table_item rev_icon" onclick="console.log(this.parentElement.dataset.id)"></td>
+      </tr>
+      <tr class="table_row" data-id="2">
+        <td class="table_item">Критичность</td>
+        <td class="table_item">9.0</td>
+        <td class="table_item">7.0</td>
+        <td class="table_item">-</td>
+        <td class="table_item">17.03.2023</td>
+        <td class="table_item rev_icon" onclick="console.log(this.parentElement.dataset.id)"></td>
+      </tr>
+      <tr class="table_row" data-id="3">
+        <td class="table_item">Название</td>
+        <td class="table_item">SQLi</td>
+        <td class="table_item">Скуля</td>
+        <td class="table_item">-</td>
+        <td class="table_item">17.03.2023</td>
+        <td class="table_item rev_icon" onclick="console.log(this.parentElement.dataset.id)"></td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+<script src="scripts/history_page_script.js"></script>
+</body>
+</html>

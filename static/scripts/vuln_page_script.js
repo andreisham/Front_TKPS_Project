@@ -17,7 +17,6 @@ window.onload =function () {
     setCriticalVulnPage(cvss_score_p.innerHTML)
     render_cvss_rating()
     translateCvss(cvss_severity_p)
-
 }
 
 let cvss_severity_p = document.querySelector('.cvss_severity')
@@ -52,9 +51,11 @@ cvss_severity.DOMSubtreeModified = function () {
 }
 
 // Добавление обработки на загрузку файлов
-document.querySelector('input[type="file"]').addEventListener('change', function (e) {
-    imageUploader(e)
-})
+if (document.querySelector('input[type="file"]')) {
+    document.querySelector('input[type="file"]').addEventListener('change', function (e) {
+        imageUploader(e)
+    })
+}
 
 // Обновление критичности
 function setCriticalVulnPage(result) {
@@ -83,14 +84,140 @@ function render_cvss_rating() {
     translateCvss(cvss_severity_p)
 }
 
+
+
+// отправка данных
+async function sendData(data, url) {
+    data.append('csrfmiddlewaretoken', document.querySelector("[name='csrfmiddlewaretoken']").value)
+    data.append('vuln', document.querySelector('header').dataset.vulnId)
+    return await fetch(url, {
+      method: 'POST',
+      body: data,
+    }).then(response => {
+    if (response.ok) {
+        return response.text()
+    }
+    }).catch(error => {
+        alert('Ошибка отправки' + error)
+    });
+}
+
+
+
+// =============== Карточка уязвимости ===============
+async function report(url) {
+  console.log(url)
+  let response = await fetch(url).then((response) => {
+    return response.text()
+  }).catch(error => {
+    alert('Ошибка отправки' + error)
+  })
+  let report = window.open();
+  report.document.open();
+  report.document.write(response);
+  report.document.close();
+}
+
 // false positive
 FalsePositive_btn.onclick = function (){
-    if (vuln_note.value.length > 0) {
-        console.log(vuln_note.value)
-        console.log('можно переводить в ФП')
-        // отправка на сервер инфы
+    Confirm.open({
+        title: 'Подтверждение действия',
+        message: 'Перевести уязвимость в статус false positive?',
+        onok: () => {
+            vuln_note = document.querySelector("[name='vuln-note']").value
+            if (vuln_note.length > 1 ) {
+                console.log(vuln_note.value)
+                console.log('можно переводить в ФП')
+                const data = new FormData()
+                data.append('release', document.querySelector('header').dataset.releaseId)
+                data.append('note', vuln_note)
+                sendData(data, '/api/vuln/false')
+                // todo success
+            } else {
+                alert('Нужно указать причину FP в примечания!')
+            }
+        }
+    })
+}
 
-    } else {
-        alert('Нужно указать причину FP в примечания!')
+// редактирование критичности уязвимости
+async function editSeverity() {
+    flagEdit = true;
+}
+
+// удаление уязвимости
+async function deleteVuln() {
+    Confirm.open({
+        title: 'Подтверждение действия',
+        message: 'Вы точно хотите удалить уязвимость?',
+        onok: () => {
+            const data = new FormData()
+            data.append('release', document.querySelector('header').dataset.releaseId)
+            sendData(data, '/api/vuln/delete')
+            // todo success
+        }
+    })
+}
+
+// Сложная редакция уязвимости (за исключением поля классификации и детализации)
+async function editVuln(nameElement, valueElement) {
+    const data = new FormData()
+    if (nameElement === 'class-link') {
+        let arrTags = new Array()
+        document.querySelectorAll(".tag_container .tag").forEach(function (currentValue, currentIndex, listObj) {
+            currentValue = currentValue.querySelector('span').textContent.trim()
+            arrTags.push(currentValue)
+        })
+        let arrTagsLinks = valueElement.split('\n')
+        arrTagsLinks.forEach(function (currentValue, currentIndex, listObj) {
+            if (currentValue === ''){
+                throw 'Значение не должно быть пустым!'
+            }
+        })
+        if (arrTags.length !== arrTagsLinks.length) {
+            throw 'Длины не равны!'
+        }
+        data.append('class', arrTags)
     }
+    data.append(nameElement, valueElement)
+    sendData(data, '/api/vuln/edit')
+}
+
+// =============== отправка формы свидетельства ===============
+
+async function handleFormSubmit() {
+  const data = serializeForm(document.getElementById('form-edit-vuln'))
+  console.log(data)
+
+  const response = await sendData(data, '/api/vuln/edit')
+}
+
+// сбор данных с формы
+function serializeForm(formNode) {
+
+  const { elements } = formNode
+
+  const data = new FormData()
+  const fileUploadBlocks = document.querySelectorAll('.image_block');
+
+  Array.from(elements)
+    .filter((item) => !!item.name)
+    .forEach((element) => {
+      const { name } = element
+      if (name === 'vuln-classification') {
+        element.value = tags
+      }
+      const value = element.value
+      data.append(name, value)
+    })
+
+  fileUploadBlocks.forEach(block => {
+    const fileInput = block.querySelector('input[type="file"]');
+    const fileDesc = block.querySelector('textarea');
+
+    data.append(fileInput.name, fileInput.files[0]);
+    data.append(fileDesc.name, fileDesc.value);
+  });
+  input.value = ''
+  return data
 }
