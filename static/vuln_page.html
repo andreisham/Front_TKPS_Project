@@ -11,14 +11,17 @@
 <body>
     <div class="menu_wrapper top_menu_wrapper">
         <ol class="menu">
-            <li class="menu_item" title="Текущий проект"><a href="main_page.html">ВТБ Онлайн</a></li>
-            <li class="menu_item" title="Страница релизов"><a href="release_page.html">Релизы</a></li>
-            <li class="logo menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
+            <li class="menu_item" title="Страница проектов"><a href="main_page.html">ВТБ Онлайн</a></li>
+            <li class="menu_item" title="Страница релизов текущего проекта"><a href="release_page.html">Релизы</a></li>
+            <li class="menu_item" title="Страница истории текущего проекта"><a href="history_page.html">История</a></li>
+            <li class="menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
             <li class="menu_item" title="Все когда либо найденные уязвимости"><a href="#">БД уязвимостей</a></li>
+            <li class="menu_item" title="Руководства пользователя"><a href="#">FAQ</a></li>
             <li class="menu_item" title="Отчеты, графики, дашборды"><a href="#">Отчеты</a></li>
         </ol>
     </div>
     <div class="container">
+        <input type="text" name="csrfmiddlewaretoken" value="yacsrftoken" style="display: none">
         <header class="vuln_header">
             <h1>XSS</h1>
             <p>ID: VTBO-2023-1</p>
@@ -29,9 +32,11 @@
             </div>
             <p>Актуальна с релиза 17.9</p>
             <label>Номер в ITSM
-                <input type="text" name="incident-number" id="incident-number">
+                <input type="text" name="incident-number" id="incident-number" onchange="editVuln(this.name, this.value)">
             </label>
-<!--TODO аварии-->
+            <label>Номер аварии
+                <input type="text" name="accident-number" id="accident-number" onchange="editVuln(this.name, this.value)">
+            </label>
             <div class="btns_wrapper">
 <!--                {% csrf_token %}-->
                 <input type="button" onclick="report('/api/vuln/report?id=1')" class="btn" id="vulnPDF_btn" value="Создать pdf карточки уязвимости"/>

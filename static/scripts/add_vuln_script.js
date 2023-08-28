@@ -23,7 +23,7 @@ function render_cvss_rating(){
   }
   setCritical(page_cvss_score.value)
 }
-// todo руссификация cvss
+
 // определение критичности (подкрашивание)
 function setCritical(result) {
   if (9.0 <= result) {

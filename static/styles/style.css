@@ -1219,12 +1219,47 @@ details[open] summary:before {
   cursor: pointer;
 }
 
+
+
 .select-option:hover {
   background-color: #f0f0f0;
 }
 
 #filter_history {
   width: 200px;
+}
+
+.faq_h1 {
+  text-align: left;
+}
+
+.faq_cards {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-around;
+}
+
+.faq_p {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
+  width: 45%;
+  background: #D2E1FF;;
+}
+
+.faq_p span {
+  color: #8e8e8e;
+}
+
+.faq_block {
+  background-image: url("../img/algorithm.png");
+  height: 1500px;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 @keyframes confirm---open {

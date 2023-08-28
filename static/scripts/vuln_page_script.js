@@ -34,7 +34,7 @@ function setCvssVector() {
 
 function translateCvss(cvss_critical) {
     if (cvss_critical.textContent === '(None)') {
-        cvss_critical.textContent = 'None'
+        cvss_critical.textContent = 'Информационный'
     } else if (cvss_critical.textContent === '(Low)') {
         cvss_critical.textContent = 'Низкий'
     } else if (cvss_critical.textContent === '(Medium)') {
@@ -45,7 +45,6 @@ function translateCvss(cvss_critical) {
         cvss_critical.textContent = 'Критический'
     }
 }
-// todo руссификация cvss
 cvss_severity.DOMSubtreeModified = function () {
     translateCvss(cvss_severity)
 }

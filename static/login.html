@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login page</title>
+        <link href="styles/login.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="animation">
+                <div class="animation__eye animation__eye--one-one"></div>
+                <div class="animation__eye animation__eye--one-two"></div>
+                <div class="animation__eye animation__eye--two-one"></div>
+                <div class="animation__eye animation__eye--two-two"></div>
+                <video class="animation__video" width="384" height="374" loop muted autoplay>
+                    <source src="video/watchers.mp4" type="video/mp4">
+                </video>
+            </div>
+            <form action="" class="form">
+                <fieldset class="form__fieldset">
+                    <label class="form__field form__field--login">
+                        <span class="form__label">Логин</span>
+                        <input class="form__input form__input--login" type="text">
+                    </label>
+                    <label class="form__field form__field--password">
+                        <span class="form__label">Пароль</span>
+                        <input class="form__input form__input--password" type="password">
+                    </label>
+                </fieldset>
+                <a class="form__button">Войти</a>
+            </form>
+            <p class="about">* использован фрагмент картины Васи Ложкина</p>
+        </div>
+        <script src="scripts/eyes.js"></script>
+    </body>
+</html>

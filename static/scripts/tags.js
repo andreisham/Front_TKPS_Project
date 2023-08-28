@@ -48,7 +48,7 @@ input.addEventListener('keyup', function(e) {
     }
 })
 
-// удаление тэгов и ссылок нажатием на крестик !TODO удаление через backspase!
+// удаление тэгов и ссылок нажатием на крестик
 document.addEventListener('click', function(e) {
     if (e.target.tagName === 'CLOSEBTN') {
         const value = e.target.getAttribute('data-item')
