@@ -1279,3 +1279,20 @@ details[open] summary:before {
   }
 }
 
+.db_wrapper {
+  padding: 0 calc(50% - 680px);
+}
+
+.filter_db {
+
+}
+
+.vuln_db_form {
+  max-width: 1600px;
+}
+
+.vuln_db_form_wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

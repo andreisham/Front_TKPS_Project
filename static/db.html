@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>База данных уязвимостей</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+
+<body id="body">
+<div class="menu_wrapper top_menu_wrapper">
+  <ol class="menu">
+    <li class="menu_item" title="Страница проектов"><a href="main_page.html">ВТБ Онлайн</a></li>
+    <li class="menu_item" title="Страница релизов текущего проекта"><a href="release_page.html">Релизы</a></li>
+    <li class="menu_item" title="Страница истории текущего проекта"><a href="history_page.html">История</a></li>
+    <li class="menu_item"> <a href="main_page.html"><img class="logo" src="img/logo_vulnTrack.png" alt="logo"></a></li>
+    <li class="menu_item" title="Все когда либо найденные уязвимости"><a href="#">БД уязвимостей</a></li>
+    <li class="menu_item" title="Руководства пользователя"><a href="#">FAQ</a></li>
+    <li class="menu_item" title="Отчеты, графики, дашборды"><a href="#">Отчеты</a></li>
+  </ol>
+</div>
+<h1>Список всех выявленных уязвимостей</h1>
+<div class="db_wrapper">
+  <section class="filter_db">
+    <form action="#" method="post" id="vuln_db_filter_form" class="form_body vuln_db_form">
+      <h3>По чем фильруем?</h3>
+      <!--                {% csrf_token %}-->
+      <div class="vuln_db_form_wrapper">
+        <label for="vuln_db_filter_key_input">Название поля
+          <select onchange="console.log(this.value)" name="vuln_db_filter_key" id="vuln_db_filter_key_input" required>
+            <option value="vuln_db_filter_by_id">ID уязвимости</option>
+            <option value="vuln_db_filter_by_project">Проект</option>
+            <option value="vuln_db_filter_by_vulnName">Наименование уязвимости</option>
+            <option value="vuln_db_filter_by_description">Подробное описание</option>
+            <option value="vuln_db_filter_by_cvss">Критичность CVSS</option>
+            <option value="vuln_db_filter_by_channel-application">Где выявлено</option>
+            <option value="vuln_db_filter_by_date-of-discovery">Дата выявления</option>
+            <option value="vuln_db_filter_by_fix-date">Дата устранения</option>
+            <option value="vuln_db_filter_by_status">Статус уязвимости</option>
+          </select>
+        </label>
+        <label for="vuln_db_filter_value_input">Что ищем?
+          <input type="text" name="vuln_db_filter_value" id="vuln_db_filter_value_input" required>
+        </label>
+        <input type="submit" class="btn" value="Отфильтровать!">
+      </div>
+
+    </form>
+  </section>
+  <section class="table_wrapper">
+    <table class="table">
+      <thead>
+      <tr class="table_header table_row">
+        <th class="table_item table_item_id">ID Уязвимости</th>
+        <th class="table_item">Проект</th>
+        <th class="table_item table_item_cvss">Наименование уязвимости</th>
+        <th class="table_item">Подробное описание</th>
+        <th class="table_item table_item_min">Критичность CVSS</th>
+        <th class="table_item">Где выявлено</th>
+        <th class="table_item">Дата выявления</th>
+        <th class="table_item">Дата устранения</th>
+        <th class="table_item">Статус уязвимости</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="table_row">
+        <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-2</td>
+        <td class="table_item">ВТБ Онлайн</td>
+        <td class="table_item">SQLi</td>
+        <td class="table_item">У вас скуля</td>
+        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+        <td class="table_item">Mobile Android</td>
+        <td class="table_item">15.03.2023</td>
+        <td class="table_item">15.05.2023</td>
+        <td class="table_item">Устранена</td>
+      </tr>
+      <tr class="table_row">
+        <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-2</td>
+        <td class="table_item">ВТБ Онлайн</td>
+        <td class="table_item">SQLi</td>
+        <td class="table_item">У вас скуля</td>
+        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+        <td class="table_item">Mobile Android</td>
+        <td class="table_item">15.03.2023</td>
+        <td class="table_item">15.05.2023</td>
+        <td class="table_item">Устранена</td>
+      </tr>
+      <tr class="table_row">
+        <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-2</td>
+        <td class="table_item">ВТБ Онлайн</td>
+        <td class="table_item">SQLi</td>
+        <td class="table_item">У вас скуля</td>
+        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+        <td class="table_item">Mobile Android</td>
+        <td class="table_item">15.03.2023</td>
+        <td class="table_item">15.05.2023</td>
+        <td class="table_item">Устранена</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+
+<script src="scripts/db_page_script.js"></script>
+<!--<script src="scripts/release_page_script.js"></script>-->
+</body>
+</html>
