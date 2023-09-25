@@ -168,8 +168,11 @@
                         <label>ФИО ответственного
                             <textarea name="vuln-resp-name" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
                         </label>
-                        <label>Источник информациии
-                            <textarea name="vuln-source" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
+                        <label class="source_inputs input-file">Источник информациии
+                            <span class="btn" id="input_span">Выберите файл</span>
+                            <input type="file" name="vuln-source" id="vuln-source" class="btn" required onchange="changeBtnName(this.files[0].name)">
+                            <input type="submit" value="Отправить файл" class="btn" onclick="editVuln(this.previousSibling.previousSibling.name, this.previousSibling.previousSibling.files[0])">
+<!--                            <textarea name="vuln-source" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>-->
                         </label>
                     </div>
                 </div>

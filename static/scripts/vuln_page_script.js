@@ -182,6 +182,11 @@ async function editVuln(nameElement, valueElement) {
     sendData(data, '/api/vuln/edit')
 }
 
+// отображение названия файла в кнопке
+function changeBtnName(file_name) {
+    input_span.innerHTML = file_name
+}
+
 // =============== отправка формы свидетельства ===============
 
 async function handleFormSubmit() {

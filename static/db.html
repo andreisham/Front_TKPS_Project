@@ -51,7 +51,7 @@
     </form>
   </section>
   <section class="table_wrapper">
-    <table class="table">
+    <table class="table" id="db_table">
       <thead>
       <tr class="table_header table_row">
         <th class="table_item table_item_id">ID Уязвимости</th>
@@ -71,7 +71,7 @@
         <td class="table_item">ВТБ Онлайн</td>
         <td class="table_item">SQLi</td>
         <td class="table_item">У вас скуля</td>
-        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+        <td class="table_item table_item_cvss high">8.0<br>Высокая</td>
         <td class="table_item">Mobile Android</td>
         <td class="table_item">15.03.2023</td>
         <td class="table_item">15.05.2023</td>
@@ -82,7 +82,7 @@
         <td class="table_item">ВТБ Онлайн</td>
         <td class="table_item">SQLi</td>
         <td class="table_item">У вас скуля</td>
-        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+        <td class="table_item table_item_cvss high">8.0<br>Высокая</td>
         <td class="table_item">Mobile Android</td>
         <td class="table_item">15.03.2023</td>
         <td class="table_item">15.05.2023</td>
@@ -93,7 +93,18 @@
         <td class="table_item">ВТБ Онлайн</td>
         <td class="table_item">SQLi</td>
         <td class="table_item">У вас скуля</td>
-        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+        <td class="table_item table_item_cvss high">8.0<br>Высокая</td>
+        <td class="table_item">Mobile Android</td>
+        <td class="table_item">15.03.2023</td>
+        <td class="table_item">15.05.2023</td>
+        <td class="table_item">Устранена</td>
+      </tr>
+      <tr class="table_row">
+        <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-2</td>
+        <td class="table_item">ВТБ Онлайн</td>
+        <td class="table_item">SQLi</td>
+        <td class="table_item">У вас скуля</td>
+        <td class="table_item table_item_cvss high">8.0<br>Высокая</td>
         <td class="table_item">Mobile Android</td>
         <td class="table_item">15.03.2023</td>
         <td class="table_item">15.05.2023</td>
@@ -101,11 +112,11 @@
       </tr>
       </tbody>
     </table>
+    <button id="add_row_btn" class="btn" data-offset=10 data-field="1" data-value="2" onclick="getMore(this.dataset.offset, this.dataset.field, this.dataset.value)">Загрузить еще</button>
+
   </section>
 
 </div>
-
-
 <script src="scripts/db_page_script.js"></script>
 <!--<script src="scripts/release_page_script.js"></script>-->
 </body>
