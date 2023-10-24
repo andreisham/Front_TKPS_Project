@@ -43,6 +43,7 @@
                 <input type="button" class="btn cvss-button" id="editCVSS_btn" value="Пересчитать критичность" onmouseup="editSeverity()">
                 <input type="button" class="btn" id="FalsePositive_btn" title="Перевести уязвимость в статус False positive" value="False positive">
                 <input type="button" class="btn" id="delVuln_btn" title="Удалить уязвимость" onclick="deleteVuln()">
+                <input type="button" class="btn" id="escalateVuln_btn" title="Эскалировать уязвимость" value="Эскалировать уязвимость" onclick="escalateVuln(this)">
                 <a href="#" onclick='history.back()' class="btn" id="add_vuln_btn">Назад</a>
             </div>
         </header>
@@ -169,6 +170,12 @@
                             <textarea name="vuln-resp-name" cols="30" rows="2" required onchange="editVuln(this.name, this.value)" onkeyup="textAreaAdjust(this)"></textarea>
                         </label>
                         <label class="source_inputs input-file">Источник информациии
+                            <div class="file_box">
+                                <div class="file_name btn">
+                                    <span>Имя_файла.txt</span>
+                                </div>
+                                <input type="button" class="btn" id="delFile_btn" title="Удалить файл" onclick="console.log(this)">
+                            </div>
                             <span class="btn" id="input_span">Выберите файл</span>
                             <input type="file" name="vuln-source" id="vuln-source" class="btn" required onchange="changeBtnName(this.files[0].name)">
                             <input type="submit" value="Отправить файл" class="btn" onclick="editVuln(this.previousSibling.previousSibling.name, this.previousSibling.previousSibling.files[0])">

@@ -37,10 +37,30 @@
                     <p id="end_Date">Дата окончания 20.03.2023</p>
                     <span id="error_span">Здесь будут предупреждения если не заполнены обязательные поля</span>
                 
-                <div class="btns_wrapper">
+                <div class="btns_wrapper" id="report_btns">
                     <a href="add_vuln.html" class="btn" id="add_vuln_btn">Добавить уязвимость</a>
-                    <input type="button" class="btn" id="primaryReport_btn" value="Создать первичный отчет">
-                    <input type="button" class="btn" id="shortReport_btn" value="Создать краткий отчет">
+                    <div class="dropdown">
+                        <input type="button" class="btn dropbtn" id="primaryReport_btn" value="Создать первичный отчет">
+                        <div class="myDropdown dropdown-content">
+                            <a href="#">CSV</a>
+                            <a href="#">HTML</a>
+                        </div>
+                    </div>
+                    <div class="dropdown ul_div">
+                        <input type="button" class="btn dropbtn" id="shortReport_btn" value="Создать краткий отчет">
+                        <div class="myDropdown dropdown-content ul_div">
+                            <div class="dropdown ul_div">
+                                <a class="dropbtn">CSV</a>
+                                <div class="myDropdown dropdown-content dropdown-content-right">
+                                    <a href="#">Новые</a>
+                                    <a href="#">Актуальные</a>
+                                    <a href="#">Устранены</a>
+                                </div>
+                            </div>
+                            <a href="#">HTML</a>
+                        </div>
+                    </div>
+
                     <input type="button" onclick="report('/api/release/full?id=1')" class="btn" id="fullReport_btn" value="Создать полный отчет" />
                     <input type="button" class="btn" id="edit_release_btn" value="Редактировать релиз">
                 </div>
@@ -63,34 +83,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table_row">
+<!--                добавление класса escalate у эскалированной уязвимости -->
+                    <tr class="table_row escalate">
                         <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-2</td>
                         <td class="table_item">SQLi</td>
                         <td class="table_item">Возможность сделать SQLi</td>
                         <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
                         <td class="table_item">Web</td>
                         <td class="table_item">15.03.2023</td>
-                        <td class="table_item table_item_status">Новая</td>
+                        <td class="table_item table_item_status">Новая (Эскалирована)</td>
                         <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
                     </tr>
-                    <tr class="table_row">
+<!--                        для примера подсветка статусов -->
+                    <tr class="table_row status_solved">
                         <td class="table_item table_item_link" onclick="info(this)">VTBO-22023-2</td>
                         <td class="table_item">SQLi</td>
                         <td class="table_item">Возможность сделать SQLi</td>
                         <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
                         <td class="table_item">Web</td>
                         <td class="table_item">15.03.2023</td>
-                        <td class="table_item table_item_status">Новая</td>
+                        <td class="table_item table_item_status">Устранена</td>
                         <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
                     </tr>
-                    <tr class="table_row">
+<!--                        для примера подсветка статусов -->
+                    <tr class="table_row status_deleted">
                         <td class="table_item table_item_link" onclick="info(this)">VTBO-20123-2</td>
                         <td class="table_item">SQLi</td>
                         <td class="table_item">Возможность сделать SQLi</td>
                         <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
                         <td class="table_item">Web</td>
                         <td class="table_item">15.03.2023</td>
-                        <td class="table_item table_item_status">Новая</td>
+                        <td class="table_item table_item_status">Удалена</td>
+                        <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
+                    </tr>
+<!--                        для примера подсветка статусов -->
+                    <tr class="table_row status_actual">
+                        <td class="table_item table_item_link" onclick="info(this)">VTBO-20123-2</td>
+                        <td class="table_item">SQLi</td>
+                        <td class="table_item">Возможность сделать SQLi</td>
+                        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+                        <td class="table_item">Web</td>
+                        <td class="table_item">15.03.2023</td>
+                        <td class="table_item table_item_status">Актуальна</td>
+                        <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
+                    </tr>
+<!--                        для примера подсветка статусов -->
+                    <tr class="table_row status_fp">
+                        <td class="table_item table_item_link" onclick="info(this)">VTBO-20123-2</td>
+                        <td class="table_item">SQLi</td>
+                        <td class="table_item">Возможность сделать SQLi</td>
+                        <td class="table_item table_item_cvss high_cvss">8.0 Высокая</td>
+                        <td class="table_item">Web</td>
+                        <td class="table_item">15.03.2023</td>
+                        <td class="table_item table_item_status">False Positive</td>
                         <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
                     </tr>
                 </tbody>
@@ -127,6 +172,21 @@
                         </td>
                         <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
                     </tr>
+                    <tr class="table_row">
+                        <td class="table_item table_item_link" onclick="info(this)">VTBO-2023-1</td>
+                        <td class="table_item">XSS</td>
+                        <td class="table_item">Возможность сделать XSS</td>
+                        <td class="table_item table_item_cvss">8.0 Высокая</td>
+                        <td class="table_item">Web</td>
+                        <td class="table_item">04.03.2023</td>
+                        <td class="table_item table_item_status">
+                            <select>
+                                <option value="vuln_actual" selected>Актуальна</option>
+                                <option value="vuln_fixed">Устранена</option>
+                            </select>
+                        </td>
+                        <td class="table_item table_item_del del_icon" onclick="deleteVuln(this.parentElement)"></td>
+                    </tr>
                 </tbody>
             </table>
             <footer class="release_footer">
@@ -135,6 +195,7 @@
                     <input type="checkbox" id="approve_check">
                     <label for="approve_check">Подтверждение готовности релиза к отчету</label>
                 </div>
+                <input type="button" class="btn" id="skip_release_btn" onclick="console.log(this)" value="Пропустить релиз">
             </footer>
         </div>
     </div>

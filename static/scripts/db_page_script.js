@@ -67,8 +67,10 @@ function setDataAtr(field, value) {
     addButton.dataset.value = value
 }
 
-async function getMore(offset, field, value) {
-    const data = {
+async function getMore(base, field, value) {
+    let offset = +base + 10
+    addButton.dataset.offset = offset
+    let data = {
         'offset': offset,
         'field': field,
         'value': value

@@ -30,17 +30,17 @@ let primaryReport = document.querySelector('#primaryReport_btn'),
     confirmFix = document.querySelector('#confirmFix_btn')
 
 // обработчики для кнопок
-if (primaryReport) {
-    primaryReport.onclick = function() {
-        console.log(this)
-    }
-}
-
-if (shortReport) {
-    shortReport.onclick = function() {
-        console.log(this)
-    }
-}
+// if (primaryReport) {
+//     primaryReport.onclick = function() {
+//         showDropdown(this)
+//     }
+// }
+//
+// if (shortReport) {
+//     shortReport.onclick = function() {
+//         showDropdown(this)
+//     }
+// }
 
 if (fullReport) {
     fullReport.onclick = function() {
@@ -205,4 +205,72 @@ async function report(url) {
 let url = new URL(document.location.href)
 let showedReleaseId = url.searchParams.get('id')
 let menu_item = document.querySelector(`[data-release_id="${showedReleaseId}"]`)
-menu_item.firstChild.setAttribute('style', 'color: #5E81FE;')
+// menu_item.firstChild.setAttribute('style', 'color: #5E81FE;')
+
+/* дропдаун по клику */
+document.querySelector('#report_btns').onclick = function(event) {
+    console.log(event)
+    if (event.target.classList.contains('dropbtn')) {
+        closeMenu(event.target.nextElementSibling)
+        event.target.nextElementSibling.classList.toggle("show");
+    }
+}
+// закрытие открытых меню
+function closeMenu(current = null){
+    let parents = []
+    if (current) {
+        let currentParent = current.parentNode
+        while(currentParent) {
+            if (currentParent.classList.contains('btns_wrapper')) break;
+            if (currentParent.classList.contains('ul_div')) parents.push(currentParent)
+            currentParent = currentParent.parentNode
+            console.log(parents)
+        }
+    }
+    let submenu=document.querySelectorAll('.dropdown-content');
+    Array.from(submenu).forEach(openDropdown => {
+        if (openDropdown !== current && !parents.includes(openDropdown)) {
+            openDropdown.classList.remove('show');
+        }
+    })
+}
+// Close the dropdown menu if the user clicks outside it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        let i;
+        for (i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
+/* дропдаун по наведению */
+// document.getElementsByClassName("btns_wrapper")[0].onmouseover= function(event) {
+//
+//     let target = event.target;
+//     if (target.classList.contains('dropbtn')) {
+//
+//         let s=target.parentElement.getElementsByClassName("myDropdown")[0];
+//         closeMenu();
+//         s.style.display='block';
+//     }
+// }
+//
+// function closeMenu(){
+//     let submenu=document.getElementsByClassName('dropdown-content');
+//     for (let i=0; i<submenu.length; i++) {
+//         submenu[i].style.display="none";
+//     }
+// }
+// document.onmousemove=function(event) {
+//     let target = event.target;
+//     if (!(target.classList.contains('dropbtn')) && !(target.parentElement.classList.contains('myDropdown'))) {
+//         closeMenu();
+//     }
+// }
+

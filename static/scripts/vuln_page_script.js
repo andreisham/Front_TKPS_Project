@@ -225,3 +225,16 @@ function serializeForm(formNode) {
   input.value = ''
   return data
 }
+
+// Эскалирование уязвимости
+function escalateVuln(vuln) {
+    if (vuln.value === 'Уязвимость эскалирована!') {
+        vuln.classList.toggle('escalate')
+        vuln.value = 'Эскалировать уязвимость'
+        // send
+    } else if (vuln.value === 'Эскалировать уязвимость') {
+        vuln.classList.toggle('escalate')
+        vuln.value = 'Уязвимость эскалирована!'
+        // send
+    }
+}
