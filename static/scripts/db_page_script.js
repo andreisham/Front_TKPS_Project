@@ -28,9 +28,16 @@ function serializeForm(formNode) {
     Array.from(elements)
         .filter((item) => !!item.name)
         .forEach((element) => {
-            const { name } = element
-            const value = element.value
-            data.append(name, value)
+            // обработка чекбоксов true\false
+            if (element.type === 'checkbox') {
+                const { name } = element
+                const value = element.checked
+                data.append(name, value)
+            } else {
+                const { name } = element
+                const value = element.value
+                data.append(name, value)
+            }
         })
 
     formNode.reset()

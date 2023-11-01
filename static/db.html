@@ -45,6 +45,21 @@
         <label for="vuln_db_filter_value_input">Что ищем?
           <input type="text" name="vuln_db_filter_value" id="vuln_db_filter_value_input" required>
         </label>
+        <div class="check_filter_container">
+          <label for="vuln_db_filter_only_ib">Только ИБ
+            <input type="checkbox" id="vuln_db_filter_only_ib" name="vuln_db_filter_only_ib">
+          </label>
+          <label for="vuln_db_filter_only_mp">Только МП
+            <input type="checkbox" id="vuln_db_filter_only_mp" name="vuln_db_filter_only_mp">
+          </label>
+          <label for="vuln_db_filter_escalated">Приоритетные
+            <input type="checkbox" id="vuln_db_filter_escalated" name="vuln_db_filter_escalated">
+          </label>
+          <label for="vuln_db_filter_overtime">С превышением срока
+            <input type="checkbox" id="vuln_db_filter_overtime" name="vuln_db_filter_overtime">
+          </label>
+        </div>
+        <input type="button" class="btn" id="csvDB_btn" title="Скачать CSV" value="Скачать CSV" onclick="console.log(this)">
         <input type="submit" class="btn" value="Отфильтровать!">
       </div>
 
