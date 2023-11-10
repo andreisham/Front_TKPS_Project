@@ -166,3 +166,40 @@ function createBlock(Vuln) {
     // console.log(data)
     // sendProjectInfo(data)
 }
+
+// отображение warning'a
+let warning = document.querySelector('.warning_db')
+
+// переменная для определения того нужно ли выводить ворнинг или нет.
+// Должна прилетать с бека при загрузке страницы в гет параметре или в куки
+warning.style.display = 'none'
+
+// Если через гет параметр /?isStatusChanged=true, то показываем, если что либо иное или нет параметра то нет
+// urlParams = new URLSearchParams(window.location.search)
+// params = {}
+//
+// urlParams.forEach((param, key) => {
+//     params[key] = param;
+// });
+//
+// if (params.isStatusChanged === 'true') {
+//     warning.style.display = 'block'
+// } else {
+//     warning.style.display = 'none'
+// }
+
+// Если через куки isStatusChanged=true, то показываем, если что либо иное или нет параметра то нет
+let isStatusChanged = getCookie('isStatusChanged')
+// возвращает куки с указанным name,
+// или undefined, если ничего не найдено
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+if (isStatusChanged === 'true') {
+    warning.style.display = 'block'
+} else {
+    warning.style.display = 'none'
+}

@@ -770,50 +770,56 @@ h3 {
   justify-content: space-between;
   align-items: center;
 }
-
-/* для элемента input c type="checkbox" */
 #approve_check {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
+  background-color: #bdffbd;
 }
 
-/* для элемента label, связанного с .custom-checkbox */
-#approve_check+label {
-  display: inline-flex;
-  align-items: center;
-  user-select: none;
-  cursor: pointer;
+#approve_check:hover {
+  background-color: #8cff8c;
 }
+/*!* для элемента input c type="checkbox" *!*/
+/*#approve_check {*/
+/*  position: absolute;*/
+/*  z-index: -1;*/
+/*  opacity: 0;*/
+/*}*/
 
-/* создание в label псевдоэлемента before со следующими стилями */
-#approve_check+label::before {
-  content: '';
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
-  border: 2px solid #ccc;
-  border-radius: 3px;
-  box-sizing: border-box;
-  vertical-align: middle;
-}
+/*!* для элемента label, связанного с .custom-checkbox *!*/
+/*#approve_check+label {*/
+/*  display: inline-flex;*/
+/*  align-items: center;*/
+/*  user-select: none;*/
+/*  cursor: pointer;*/
+/*}*/
 
-/* стили при наведении курсора на checkbox */
-#approve_check:not(:disabled):not(:checked)+label:hover::before {
-  border-color: #b3d7ff;
-}
+/*!* создание в label псевдоэлемента before со следующими стилями *!*/
+/*#approve_check+label::before {*/
+/*  content: '';*/
+/*  display: inline-block;*/
+/*  width: 18px;*/
+/*  height: 18px;*/
+/*  margin-right: 5px;*/
+/*  border: 2px solid #ccc;*/
+/*  border-radius: 3px;*/
+/*  box-sizing: border-box;*/
+/*  vertical-align: middle;*/
+/*}*/
 
-/* стили для чекбокса, находящегося в состоянии checked */
-#approve_check:checked+label::before {
-  content: '✔';
-  font-size: 14px;
-  line-height: 14px;
-  text-align: center;
-  color: #fff;
-  background-color: #008000;
-  border-color: #008000;
-}
+/*!* стили при наведении курсора на checkbox *!*/
+/*#approve_check:not(:disabled):not(:checked)+label:hover::before {*/
+/*  border-color: #b3d7ff;*/
+/*}*/
+
+/*!* стили для чекбокса, находящегося в состоянии checked *!*/
+/*#approve_check:checked+label::before {*/
+/*  content: '✔';*/
+/*  font-size: 14px;*/
+/*  line-height: 14px;*/
+/*  text-align: center;*/
+/*  color: #fff;*/
+/*  background-color: #008000;*/
+/*  border-color: #008000;*/
+/*}*/
 
 /* модальное окно добавления релиза */
 #add_release_modal{
@@ -1390,4 +1396,17 @@ details[open] summary:before {
   background-repeat: no-repeat;
   background-size: contain;
   background-color: #ff4747;
+}
+.warning_db {
+  background-color: #ff4c4c;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  margin: 0 auto 30px;
+  opacity: 0;
+  transform: scale(0.75);
+  animation-name: confirm__window---open;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s;
 }
